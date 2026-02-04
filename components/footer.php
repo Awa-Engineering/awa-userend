@@ -66,7 +66,7 @@
                                         <li><a href="faq">FAQ's</a></li>
                                         <li><a href="services">Services</a></li>
                                         <li><a href="projects">Projects</a></li>
-                                        <li><a href="terms">Terms of use</a></li>
+                                        <li><a href="https://www.awaengineeringng.com/webmail" target="_blank">Staff mail</a></li>
                                     </ul>
                                 </div>
                             </div>
