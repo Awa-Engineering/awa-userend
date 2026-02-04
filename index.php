@@ -8,7 +8,9 @@ include "./components/navbar.php";
         <div class="swiper th-slider hero-slider10" id="heroSlide10" data-slider-options='{"effect":"fade","loop":false,"autoHeight": true}'>
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <div class="th-hero-bg" data-bg-src="assets/img/hero/hero_bg_10_1.jpg" data-mask-src="assets/img/hero/hero_10_bg_mask.png"><img src="assets/img/hero/hero_bg_overlay10_1.png" alt="img"></div>
+                    <div class="th-hero-bg" data-bg-src="./assets/img/hero1.jpeg" data-mask-src="./assets/img/hero-bg-mask.png">
+                        <img src="./assets/img/hero-overlay.png" alt="img">
+                    </div>
                     <div class="container">
                         <div class="hero-inner">
                             <div class="row justify-content-center">
@@ -22,6 +24,7 @@ include "./components/navbar.php";
                         </div>
                     </div>
                 </div>
+
                 <div class="swiper-slide">
                     <div class="th-hero-bg" data-bg-src="assets/img/hero/hero_bg_10_2.jpg" data-mask-src="assets/img/hero/hero_10_bg_mask.png"><img src="assets/img/hero/hero_bg_overlay10_1.png" alt="img"></div>
                     <div class="container">
@@ -37,6 +40,7 @@ include "./components/navbar.php";
                         </div>
                     </div>
                 </div>
+
                 <div class="swiper-slide">
                     <div class="th-hero-bg" data-bg-src="assets/img/hero/hero_bg_10_3.jpg" data-mask-src="assets/img/hero/hero_10_bg_mask.png"><img src="assets/img/hero/hero_bg_overlay10_1.png" alt="img"></div>
                     <div class="container">
@@ -52,6 +56,7 @@ include "./components/navbar.php";
                         </div>
                     </div>
                 </div>
+
                 <div class="swiper-slide">
                     <div class="th-hero-bg" data-bg-src="assets/img/hero/hero_bg_10_1.jpg" data-mask-src="assets/img/hero/hero_10_bg_mask.png"><img src="assets/img/hero/hero_bg_overlay10_1.png" alt="img"></div>
                     <div class="container">
@@ -67,6 +72,7 @@ include "./components/navbar.php";
                         </div>
                     </div>
                 </div>
+
                 <div class="swiper-slide">
                     <div class="th-hero-bg" data-bg-src="assets/img/hero/hero_bg_10_2.jpg" data-mask-src="assets/img/hero/hero_10_bg_mask.png"><img src="assets/img/hero/hero_bg_overlay10_1.png" alt="img"></div>
                     <div class="container">
@@ -82,6 +88,7 @@ include "./components/navbar.php";
                         </div>
                     </div>
                 </div>
+                
                 <div class="swiper-slide">
                     <div class="th-hero-bg" data-bg-src="assets/img/hero/hero_bg_10_3.jpg" data-mask-src="assets/img/hero/hero_10_bg_mask.png"><img src="assets/img/hero/hero_bg_overlay10_1.png" alt="img"></div>
                     <div class="container">
