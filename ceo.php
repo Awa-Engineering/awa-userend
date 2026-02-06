@@ -31,7 +31,7 @@ include "./components/navbar-alt.php";
                     </div>
                     <div class="col-lg-6">
                         <div class="about-page-box">
-                            <h2 class="mt-n3 fw-semibold mb-1">Engr. Victoria Wobo Nyeche PhD</h2>
+                            <h3 class="mt-n3 fw-semibold mb-1">Engr. Victoria Wobo Nyeche PhD</h3>
                         </div>
                         <p class="mt-30">Engr. Victoria Nyeche is the Chief Executive Officer has over two decades of professional experience as an Environmentalist in the private and public sector.</p>
                         <p>She holds a Doctorate degree in Environmental Resources Management as well as a Masters degree in Chemical Engineering. She is a COREN registered Chemical Engineer, a registered Environmental Professional, a fellow of the Nigerian Environmental Society and a member of Nigerian Society of Engineers.</p>
