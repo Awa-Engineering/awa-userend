@@ -152,6 +152,151 @@ include "./components/navbar.php";
         </div>
     </div>
 
+    <div class="overflow-hidden contact-area-4-2 z-index-common">
+        <div class="container th-container2">
+            <div class="contact-wrap4 bg-smoke4">
+                <div class="row g-0">
+                    <div class="col-lg-6">
+                        <div class="appointment-wrap2">
+                            <h2 class="form-title">Our Services</h2>
+                            <p class="sec-text">
+                                We deliver a broad spectrum of professional services to address environmental and industrial challenges with precision and excellence:
+                                <ul>
+                                    <li><b>Environmental Engineering</b> – spill management, remediation, and environmental protection services.</li>
+                                    <li><b>Waste Management</b> – effective segregation, packaging, and disposal solutions for industrial and domestic wastes.</li>
+                                    <li><b>Environmental Studies</b> – comprehensive environmental assessments, effluent analyses, and impact reports.</li>
+                                    <li><b>Fumigation & Pest-Odor Control</b> – safe and professional pest management services for commercial and institutional environments.</li>
+                                    <li><b>Procurement Services</b> – sourcing and supplying high-quality safety equipment and PPE.</li>
+                                    <li><b>Corrosion Control</b> – preventive and corrective corrosion protection programs.</li>
+                                </ul>
+                                Our services are performed by highly trained professionals committed to safety, quality, and client satisfaction.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="contact-thumb4-1">
+                            <img class="w-100" src="./assets/img/project/project3-1.jpg" alt="img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="space overflow-hidden bg-smoke3" id="project-sec">
+        <div class="container th-container2">
+            <div class="row justify-content-lg-between align-items-center">
+                <div class="col-xxl-6 col-xl-7 col-lg-6">
+                    <div class="title-area"><span class="sub-title text-title">Our Projects</span>
+                        <h2 class="sec-title">Our Latetst Projects</h2>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="sec-btn">
+                        <a href="projects" class="th-btn style2 th-btn-icon">Browse All Project</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-area">
+                <div class="swiper th-slider slider-drag-wrap" id="projectSlider3" data-slider-options='{"breakpoints":{"0":{"slidesPerView":1},"576":{"slidesPerView":"1"},"768":{"slidesPerView":"2"},"992":{"slidesPerView":"3"},"1400":{"slidesPerView":"4"}}}'>
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="portfolio-card style3">
+                                <div class="portfolio-img">
+                                    <img src="./assets/img/project/project1.jpg" style="height:300px; object-fit:cover;" alt="project image">
+                                    <a href="ogoni-clean-up" class="icon-btn">
+                                        <div class="icon">
+                                            <img src="assets/img/icon/arrow-right.svg" alt="img">
+                                        </div>Look More
+                                    </a>
+                                </div>
+                                <div class="portfolio-content pt-0">
+                                    <h3 class="portfolio-title">
+                                        <a href="ogoni-clean-up">Ogoni clean up</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="portfolio-card style3">
+                                <div class="portfolio-img">
+                                    <img src="./assets/img/project/project2.jpg" style="height:300px; object-fit:cover;" alt="project image">
+                                    <a href="j-g-gas-oil-field" class="icon-btn">
+                                        <div class="icon">
+                                            <img src="assets/img/icon/arrow-right.svg" alt="img">
+                                        </div>Look More
+                                    </a>
+                                </div>
+                                <div class="portfolio-content pt-0">
+                                    <h3 class="portfolio-title">
+                                        <a href="j-g-gas-oil-field">J+G gas and oil field</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="portfolio-card style3">
+                                <div class="portfolio-img">
+                                    <img src="./assets/img/project/project3-1.jpg" style="height:300px; object-fit:cover;" alt="project image">
+                                    <a href="phrc" class="icon-btn">
+                                        <div class="icon">
+                                            <img src="assets/img/icon/arrow-right.svg" alt="img">
+                                        </div>Look More
+                                    </a>
+                                </div>
+                                <div class="portfolio-content pt-0">
+                                    <h3 class="portfolio-title">
+                                        <a href="phrc">PHRC</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="portfolio-card style3">
+                                <div class="portfolio-img">
+                                    <img src="./assets/img/project/project4-1.jpg" style="height:300px; object-fit:cover;" alt="project image">
+                                    <a href="aveon-offshore" class="icon-btn">
+                                        <div class="icon">
+                                            <img src="assets/img/icon/arrow-right.svg" alt="img">
+                                        </div>Look More
+                                    </a>
+                                </div>
+                                <div class="portfolio-content pt-0">
+                                    <h3 class="portfolio-title">
+                                        <a href="aveon-offshore">Aveon Offshore</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="portfolio-card style3">
+                                <div class="portfolio-img">
+                                    <img src="./assets/img/project/project5.jpg" style="height:300px; object-fit:cover;" alt="project image">
+                                    <a href="halliburton-energy-services" class="icon-btn">
+                                        <div class="icon">
+                                            <img src="assets/img/icon/arrow-right.svg" alt="img">
+                                        </div>Look More
+                                    </a>
+                                </div>
+                                <div class="portfolio-content pt-0">
+                                    <h3 class="portfolio-title">
+                                        <a href="halliburton-energy-services">Halliburton Energy Services</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <?php include "./components/clients.php"; ?>
 
 

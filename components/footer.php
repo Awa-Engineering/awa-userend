@@ -95,7 +95,7 @@
                     <div class="footer-container">
                         <div class="row gy-2 align-items-center justify-content-center">
                             <div class="col-12 text-center">
-                                <p class="copyright-text"><i class="fal fa-copyright"></i> <script>document.write(new Date().getFullYear());</script> AWA, All rights reserved. Built By <a href="https://www.webify.com.ng" target="_blank">Webify</a></p>
+                                <p class="copyright-text"><i class="fal fa-copyright"></i> <script>document.write(new Date().getFullYear());</script> AWA, All rights reserved. <!--Built By <a href="https://www.webify.com.ng" target="_blank">Webify</a>--></p>
                             </div>
                         </div>
                     </div>
