@@ -125,40 +125,46 @@
     </script>
 
     <script>
-      document.getElementById("contactForm").addEventListener("submit", function(e) {
-        // Get the response token
-        var response = grecaptcha.getResponse();
+        const contactForm = document.getElementById("contactForm");
 
-        // Check if the user has completed the reCAPTCHA
-        if (response.length === 0) {
-          e.preventDefault(); // Stop form submission
-          alert("Please verify you are not a robot.");
-          return false;
+        if (contactForm) {
+            contactForm.addEventListener("submit", function(e) {
+                var response = grecaptcha.getResponse();
+
+                if (response.length === 0) {
+                    e.preventDefault();
+                    alert("Please verify you are not a robot.");
+                    return false;
+                }
+            });
         }
-      });
     </script>
 
     <script>
         const parent = document.getElementById('divColor');
-        const elements = parent.querySelectorAll("*");
 
-        elements.forEach(el => {
-            el.style.color = "#ffffff"; // Change to any color
-        });
+        if (parent) {
+            const elements = parent.querySelectorAll("*");
+            elements.forEach(el => {
+                el.style.color = "#ffffff";
+            });
+        }
     </script>
     
     <script>
-      document.getElementById("quoteForm").addEventListener("submit", function(e) {
-        // Get the response token
-        var response = grecaptcha.getResponse();
+        const quoteForm = document.getElementById("quoteForm");
 
-        // Check if the user has completed the reCAPTCHA
-        if (response.length === 0) {
-          e.preventDefault(); // Stop form submission
-          alert("Please verify you are not a robot.");
-          return false;
+        if (quoteForm) {
+            quoteForm.addEventListener("submit", function(e) {
+                var response = grecaptcha.getResponse();
+
+                if (response.length === 0) {
+                    e.preventDefault();
+                    alert("Please verify you are not a robot.");
+                    return false;
+                }
+            });
         }
-      });
     </script>
 
 

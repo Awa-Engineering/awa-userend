@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['new_enquiry_btn'])) {
                 <div class="col-lg-8">
                     <div class="appointment-wrap contact-wrap6">
                         <h2 class="form-title fw-semibold mb-35">Let’s Work Together</h2>
-                        <form id="contactForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="appointment-form ajax-contact">
+                        <form id="contactForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                             <div class="row">
                                 <div class="form-group style-border2 style-radius col-lg-6">
                                     <input type="text" class="form-control" name="firstName" required="required" placeholder="First Name">
@@ -143,7 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['new_enquiry_btn'])) {
                                     </button>
                                 </div>
                             </div>
-                            <p class="form-messages mb-0 mt-3"></p>
                         </form>
                     </div>
                 </div>
