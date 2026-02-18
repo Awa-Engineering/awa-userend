@@ -48,10 +48,13 @@ if (isset($_POST['new_certifiate_btn'])) {
     }
 
     // Only accept image files
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
     $imageInfo = getimagesize($fileTmp);
 
-    if ($imageInfo === false) {
-        $_SESSION['error_message'] = "Only image uploads are allowed.";
+    if (!$imageInfo || !in_array($fileExt, $allowedExtensions)) {
+        $_SESSION['error_message'] = "Only valid image uploads are allowed.";
         echo "<meta http-equiv='refresh' content='0; URL=certifications'>";
         exit();
     }
