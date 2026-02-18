@@ -3,21 +3,31 @@ include "./components/header.php";
 include "./components/navbar-alt.php";
 require_once "./auth/queries.php";
 
-    $recaptchaSecret = '6LfAHGAsAAAAAMWgbXTJSKOz5YST3KeWfLEOVI3l';
-    $response = $_POST['g-recaptcha-response'];
-    $remoteip = $_SERVER['REMOTE_ADDR'];
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['new_enquiry_btn'])) {
 
-    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$response}&remoteip={$remoteip}");
-    $responseData = json_decode($verify);
+    if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
 
-    if ($responseData->success) {
-        // Verified successfully
-        //echo "Success!";
+        $recaptchaSecret = '6LfAHGAsAAAAAMWgbXTJSKOz5YST3KeWfLEOVI3l';
+        $response = $_POST['g-recaptcha-response'];
+        $remoteip = $_SERVER['REMOTE_ADDR'];
+
+        $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$response}&remoteip={$remoteip}");
+        $responseData = json_decode($verify);
+
+        if ($responseData->success) {
+            // Verified successfully
+            // echo "Success!";
+        } else {
+            // Failed verification
+            echo "reCAPTCHA failed. Please try again.";
+        }
+
     } else {
-        // Failed verification
-        //echo "reCAPTCHA failed. Please try again.";
+        echo "Please complete the reCAPTCHA.";
     }
+}
 ?>
+
 
     <div class="breadcumb-wrapper" data-bg-src="./assets/img/contact.jpg">
         <div class="breadcumb-overlay"></div>
