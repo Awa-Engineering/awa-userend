@@ -48,7 +48,9 @@ if (isset($_POST['new_certifiate_btn'])) {
     }
 
     // Only accept image files
-    if (!preg_match("!image!", $fileType)) {
+    $imageInfo = getimagesize($fileTmp);
+
+    if ($imageInfo === false) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
         echo "<meta http-equiv='refresh' content='0; URL=certifications'>";
         exit();
