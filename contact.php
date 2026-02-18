@@ -126,7 +126,7 @@ require_once "./auth/queries.php";
                                     <div class="g-recaptcha" data-sitekey="6LfAHGAsAAAAAPKpHPLI12ant7SZ5_dn1zAI6lc1"></div>
                                 </div>
                                 <div class="col-12 form-btn">
-                                    <button class="th-btn style4">Submit Message 
+                                    <button class="th-btn style4" name="new_enquiry_btn" type="submit">Submit Message 
                                         <span class="btn-icon">
                                             <img src="assets/img/icon/paper-plane.svg" alt="img">
                                         </span>
