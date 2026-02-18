@@ -5,7 +5,7 @@
         </button>
         <a class="navbar-brand d-inline-block py-lg-1 mb-lg-5" href="./">
             <img src="assets/img/awa-logo-dark.svg" class="logo-dark h-rem-16 h-rem-md-16 mx-auto" alt="Logo">
-            <img src="assets/img/Giolee-logo-light.png" class="logo-light h-rem-16 h-rem-md-16 mx-auto" alt="Logo">
+            <img src="assets/img/awa-logo-light.svg" class="logo-light h-rem-16 h-rem-md-16 mx-auto" alt="Logo">
         </a>
         <div class="navbar-user d-lg-none">
             <div class="dropdown">
@@ -47,7 +47,7 @@
                             <li class="nav-item"><a href="ceo" class="nav-link">The CEO's Desk</a></li>
                             <li class="nav-item"><a href="team" class="nav-link">Team</a></li>
                             <li class="nav-item"><a href="faq" class="nav-link">FAQ's</a></li>
-                            <li class="nav-item"><a href="careers" class="nav-link">Careers</a></li>
+                            <!-- <li class="nav-item"><a href="careers" class="nav-link">Careers</a></li> -->
                         </ul>
                     </div>
                 </li>
