@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand d-inline-block py-lg-1 mb-lg-5" href="./">
-            <img src="assets/img/Giolee-logo.png" class="logo-dark h-rem-16 h-rem-md-16 mx-auto" alt="Logo">
+            <img src="assets/img/awa-logo-dark.svg" class="logo-dark h-rem-16 h-rem-md-16 mx-auto" alt="Logo">
             <img src="assets/img/Giolee-logo-light.png" class="logo-light h-rem-16 h-rem-md-16 mx-auto" alt="Logo">
         </a>
         <div class="navbar-user d-lg-none">
