@@ -81,8 +81,8 @@
                     
                     <div><button type="submit" name="login_btn" class="btn btn-dark w-100">Sign in</button></div>
                 </form>
+            </div>
         </div>
-    </div>
     </div>
 
     <script src="assets/js/main.js"></script>

@@ -1,22 +1,22 @@
 <?php
 include "./components/header.php";
 include "./components/navbar-alt.php";
-// require_once "./auth/queries.php";
+require_once "./auth/queries.php";
 
-    // $recaptchaSecret = '6LfAHGAsAAAAAMWgbXTJSKOz5YST3KeWfLEOVI3l';
-    // $response = $_POST['g-recaptcha-response'];
-    // $remoteip = $_SERVER['REMOTE_ADDR'];
+    $recaptchaSecret = '6LfAHGAsAAAAAMWgbXTJSKOz5YST3KeWfLEOVI3l';
+    $response = $_POST['g-recaptcha-response'];
+    $remoteip = $_SERVER['REMOTE_ADDR'];
 
-    // $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$response}&remoteip={$remoteip}");
-    // $responseData = json_decode($verify);
+    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$response}&remoteip={$remoteip}");
+    $responseData = json_decode($verify);
 
-    // if ($responseData->success) {
-    //     // Verified successfully
-    //     //echo "Success!";
-    // } else {
-    //     // Failed verification
-    //     //echo "reCAPTCHA failed. Please try again.";
-    // }
+    if ($responseData->success) {
+        // Verified successfully
+        //echo "Success!";
+    } else {
+        // Failed verification
+        //echo "reCAPTCHA failed. Please try again.";
+    }
 ?>
 
     <div class="breadcumb-wrapper" data-bg-src="./assets/img/contact.jpg">

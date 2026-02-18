@@ -21,14 +21,14 @@ if (isset($_GET['logout'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <title>Giolee :: Admin Dashboard</title>
+    <title>AWA Engineering Limited&reg; :: Admin Dashboard</title>
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/utility.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/datatable.css">
     <link rel="stylesheet" href="assets/css/font/fonts.css">
-    <link rel="icon" type="image/png" href="assets/img/giolee-favicon.png">
+    <link rel="icon" type="image/png" href="assets/img/favicon.svg">
     <link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
 
     <style>
