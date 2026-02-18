@@ -78,23 +78,23 @@ if (isset($_POST['delete_quote_btn'])) {
 // Delete Certificate script
 if (isset($_POST['delete_certificate_btn'])) {
 
-    $id = $_GET['id'];
+    if (!empty($_POST['id'])) {
+        $id = $conn->real_escape_string($_POST['id']);
 
-    $id = $conn->real_escape_string($_POST['id']);
+        $query = "DELETE FROM certificate WHERE certificateID = '$id'";
+        $result = mysqli_query($conn, $query);
 
-    $query = "DELETE FROM certificate WHERE certificateID = '$id'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_affected_rows($conn) > 0 ) {
-        $_SESSION['success_message'] = "Certificate Deleted";
-        echo "<meta http-equiv='refresh' content='0; URL=certifications'>";
-        exit();
-    }else{
-        $_SESSION['error_message'] = "Error deleting certificate.";
-        echo "<meta http-equiv='refresh' content='0; URL=certifications'>";
-        exit();
+        if (mysqli_affected_rows($conn) > 0 ) {
+            $_SESSION['success_message'] = "Certificate Deleted";
+        } else {
+            $_SESSION['error_message'] = "Error deleting certificate.";
+        }
+    } else {
+        $_SESSION['error_message'] = "Certificate ID missing.";
     }
 
+    echo "<meta http-equiv='refresh' content='0; URL=certifications'>";
+    exit();
 }
 
 
