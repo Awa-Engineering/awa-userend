@@ -107,6 +107,22 @@
     <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
     <script src="assets/js/app.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+        document.addEventListener('keydown', function(e) {
+        // Block Ctrl+U, Ctrl+S, Ctrl+C
+        if ((e.ctrlKey && ['u','s','c'].includes(e.key.toLowerCase())) || 
+            e.key === 'F12') {
+            e.preventDefault();
+        }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
 
     <script>
       document.getElementById("contactForm").addEventListener("submit", function(e) {
@@ -121,6 +137,68 @@
         }
       });
     </script>
+
+    <script>
+        const parent = document.getElementById('divColor');
+        const elements = parent.querySelectorAll("*");
+
+        elements.forEach(el => {
+            el.style.color = "#ffffff"; // Change to any color
+        });
+    </script>
+    
+    <script>
+      document.getElementById("quoteForm").addEventListener("submit", function(e) {
+        // Get the response token
+        var response = grecaptcha.getResponse();
+
+        // Check if the user has completed the reCAPTCHA
+        if (response.length === 0) {
+          e.preventDefault(); // Stop form submission
+          alert("Please verify you are not a robot.");
+          return false;
+        }
+      });
+    </script>
+
+
+	<?php
+    if (isset($_SESSION['success_message'])) {
+    ?>
+        <script>
+            Swal.fire({
+                text: "<?php echo $_SESSION['success_message']; ?>",
+                icon: "success",
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: 'Close Now',
+                cancelButtonColor: '#FF3366',
+                timer: 4000
+            });
+        </script>
+    <?php
+        unset($_SESSION['success_message']);
+    }
+    ?>
+
+    <?php
+    if (isset($_SESSION['error_message'])) {
+    ?>
+        <script>
+            Swal.fire({
+                text: "<?php echo $_SESSION['error_message']; ?>",
+                icon: "error",
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: 'Close Now',
+                cancelButtonColor: '#FF3366',
+                timer: 4000
+            });
+        </script>
+    <?php
+        unset($_SESSION['error_message']);
+    }
+    ?>
 
 </body>
 
