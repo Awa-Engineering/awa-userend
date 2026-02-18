@@ -1,4 +1,5 @@
 <?php
+require_once "./config/db.php";
 include "./components/header.php";
 include "./components/navbar-alt.php";
 ?>
@@ -23,29 +24,43 @@ include "./components/navbar-alt.php";
     <section class="space-top space-extra2-bottom">
         <div class="container">
             <div class="row gy-40">
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card7 style2 cert-card">
-                        <div class="img-shine cert-img">
-                            <img src="./assets/img/cert1.jpeg" alt="Certification">
-                        </div>
-                    </div>
-                </div>
+                <?php
 
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card7 style2 cert-card">
-                        <div class="img-shine cert-img">
-                            <img src="./assets/img/cert2.jpg" alt="Certification">
-                        </div>
-                    </div>
-                </div>
+                    $select_query = "SELECT * FROM certificate";
 
+                    $result = mysqli_query($conn, $select_query);
+
+                    // Check for query errors
+                    if (!$result) {
+                        die("Query failed: " . mysqli_error($conn));
+                    }
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $certificateID = $row['certificateID'];
+                            $title = $row['title'];
+                            $filePath = $row['filePath'];
+                        
+                ?>
                 <div class="col-md-6 col-xl-4">
                     <div class="property-card7 style2 cert-card">
                         <div class="img-shine cert-img">
-                            <img src="./assets/img/cert3.jpeg" alt="Certification">
+                            <img src="./admin/<?php echo $filePath; ?>" alt="<?php echo $title; ?>">
                         </div>
                     </div>
                 </div>
+                <?php
+                        }
+                    }
+                    else {
+                        echo
+                        "<div class='text-center mt-4'>
+                        <img src='./assets/img/no-data-icon.svg' width='120'>
+                        <p class='lead mt-3'>No Certifications Yet!</p>
+                        </div>";
+                    }
+                ?>
+
             </div>
         </div>
     </section>
