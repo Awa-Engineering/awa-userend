@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['new_enquiry_btn'])) {
                                 <div class="col-12 form-group style-border2 style-radius">
                                     <textarea placeholder="Type Your Message" name="request" required="required" class="form-control"></textarea>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 mb-20">
                                     <div class="g-recaptcha" data-sitekey="6LfAHGAsAAAAAPKpHPLI12ant7SZ5_dn1zAI6lc1"></div>
                                 </div>
                                 <div class="col-12 form-btn">
