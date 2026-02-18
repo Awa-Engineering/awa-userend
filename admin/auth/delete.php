@@ -79,15 +79,19 @@ if (isset($_POST['delete_quote_btn'])) {
 if (isset($_POST['delete_certificate_btn'])) {
 
     if (!empty($_POST['id'])) {
-        $id = $conn->real_escape_string($_POST['id']);
+        $id = intval($_POST['id']); // safe numeric ID
 
-        $query = "DELETE FROM certificate WHERE certificateID = '$id'";
+        $query = "DELETE FROM certificate WHERE certificateID = $id";
         $result = mysqli_query($conn, $query);
 
-        if (mysqli_affected_rows($conn) > 0 ) {
-            $_SESSION['success_message'] = "Certificate Deleted";
+        if (!$result) {
+            die("Query failed: " . mysqli_error($conn));
+        }
+
+        if (mysqli_affected_rows($conn) > 0) {
+            $_SESSION['success_message'] = "Certificate deleted successfully.";
         } else {
-            $_SESSION['error_message'] = "Error deleting certificate.";
+            $_SESSION['error_message'] = "No certificate found with that ID or insufficient privileges.";
         }
     } else {
         $_SESSION['error_message'] = "Certificate ID missing.";
