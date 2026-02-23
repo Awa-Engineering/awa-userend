@@ -79,27 +79,57 @@ if (isset($_POST['delete_quote_btn'])) {
 if (isset($_POST['delete_certificate_btn'])) {
 
     if (!empty($_POST['id'])) {
-        $id = intval($_POST['id']); // safe numeric ID
 
-        $query = "DELETE FROM certificate WHERE certificateID = $id";
-        $result = mysqli_query($conn, $query);
+        $id = intval($_POST['id']);
 
-        if (!$result) {
-            die("Query failed: " . mysqli_error($conn));
-        }
+        // Get the file path from DB
+        $stmt = $conn->prepare("SELECT filePath FROM certificate WHERE certificateID = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if (mysqli_affected_rows($conn) > 0) {
-            $_SESSION['success_message'] = "Certificate deleted successfully.";
+        if ($result->num_rows > 0) {
+
+            $row = $result->fetch_assoc();
+            $fileName = $row['filePath']; // includes 'upload/...'
+
+            // Build absolute path correctly
+            $filePath = __DIR__ . "/../" . $fileName;
+
+            // Debug (remove in production)
+            // echo "Deleting file: " . $filePath; exit();
+
+            // Delete DB record
+            $deleteStmt = $conn->prepare("DELETE FROM certificate WHERE certificateID = ?");
+            $deleteStmt->bind_param("i", $id);
+            $deleteStmt->execute();
+
+            if ($deleteStmt->affected_rows > 0) {
+
+                // Delete file if it exists
+                if (!empty($fileName) && file_exists($filePath)) {
+                    unlink($filePath);
+                }
+
+                $_SESSION['success_message'] = "Certificate and file deleted successfully.";
+
+            } else {
+                $_SESSION['error_message'] = "Failed to delete certificate.";
+            }
+
         } else {
-            $_SESSION['error_message'] = "No certificate found with that ID or insufficient privileges.";
+            $_SESSION['error_message'] = "Certificate not found.";
         }
+
     } else {
         $_SESSION['error_message'] = "Certificate ID missing.";
     }
 
-    echo "<meta http-equiv='refresh' content='0; URL=certifications'>";
+    // Refresh page
+    echo '<meta http-equiv="refresh" content="0; url=certifications">';
     exit();
 }
+
 
 
 
