@@ -10,39 +10,42 @@ include "./config/db.php";
 //Login script
 if (isset($_POST['login_btn'])) {
 
-    $password = $conn->real_escape_string($_POST['password']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $status = $conn->real_escape_string($_POST['status']);
-    $phone = $conn->real_escape_string($_POST['phone']);
+    // Ensure variables are set and escape them
+    $email = $conn->real_escape_string($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';  // Don't escape yet, we hash later
+    $statusInput = $_POST['status'] ?? '';
+    $phoneInput = $_POST['phone'] ?? '';
 
-    $password = sha1($password);
-    $query = "SELECT * FROM admin WHERE email='$email' AND password='$password'";
+    if (empty($email) || empty($password)) {
+        $_SESSION['error_message'] = "<strong>Error!</strong> Email and Password required";
+        header('location: login.php');
+        exit();
+    }
+
+    // Hash password with SHA1 (if you can't change DB, otherwise use password_verify)
+    $passwordHash = sha1($password);
+
+    $query = "SELECT * FROM admin WHERE email='$email' AND password='$passwordHash'";
     $result = mysqli_query($conn, $query);
-    while ($row = mysqli_fetch_array($result)) {
-        $firstName = $row['firstName'];
-        $firstName = $row['firstName'];
-        $email = $row['email'];
-        $adminID = $row['adminID'];
-        $status = $row['status'];
-        $picture = $row['picture'];
-        $phone = $row['phone'];
-        $designation = $row['designation'];
-    }if (mysqli_num_rows($result) == 1) {
-        $_SESSION['firstName'] = $firstName;
-        $_SESSION['firstName'] = $firstName;
-        $_SESSION['picture'] = $picture;
-        $_SESSION['email'] = $email;
-        $_SESSION['phone'] = $phone;
-        $_SESSION['adminID'] = $adminID;
-        $_SESSION['designation'] = $designation;
-        if ($status == 1){
-            $_SESSION['success_message'] = "Login Successfull";
+
+    if ($result && mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+
+        $_SESSION['firstName'] = $row['firstName'];
+        $_SESSION['picture']   = $row['picture'];
+        $_SESSION['email']     = $row['email'];
+        $_SESSION['phone']     = $row['phone'];
+        $_SESSION['adminID']   = $row['adminID'];
+        $_SESSION['designation'] = $row['designation'];
+
+        if ($row['status'] == 1) {
+            $_SESSION['success_message'] = "Login Successful";
             header('location: dashboard');
+            exit();
+        } else {
+            $_SESSION['error_message'] = "<strong>Error!</strong> Account not active, please contact admin.";
         }
-        if ($status == 0){
-            $_SESSION['error_message'] = "<strong>Error!</strong> Account not active please contact admin.";
-        }
-    }else {
-        $_SESSION['error_message'] = "<strong>Error!</strong> incorrect Login Details";
+    } else {
+        $_SESSION['error_message'] = "<strong>Error!</strong> Incorrect login details";
     }
 }
