@@ -63,7 +63,7 @@
                                                                 </td>
                                                                 <td class="text-end">
                                                                     <a href="view-certificate?id=<?php echo $certificateID; ?>" class='btn btn-dark btn-sm'>View <i class="bi bi-eye"></i></a>
-                                                                    <button type="button" data-id="<? echo $certificateID; ?>" onclick="confirmCertificateDelete(this);" class='btn btn-danger btn-sm'>Delete <i class="bi bi-trash"></i></button>
+                                                                    <button type="button" data-id="<?php echo $certificateID; ?>" onclick="confirmCertificateDelete(this);" class='btn btn-danger btn-sm'>Delete <i class="bi bi-trash"></i></button>
                                                                     <!-- <a href="edit-admin?id=<?php echo $adminID; ?>" class='btn btn-success btn-sm'><i class="bi bi-pen"></i></a> -->
                                                                 </td>
                                                             </tr>
