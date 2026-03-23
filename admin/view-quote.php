@@ -13,37 +13,51 @@
                 <main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
                     <?php
 
-                        $quoteID = $_GET['id'];
+                        $quoteID = $_GET['id'] ?? '';
+
+                        if (empty($quoteID)) {
+                            $_SESSION['error_message'] = "No quote selected.";
+                            echo '<meta http-equiv="refresh" content="0; url=quote">';
+                            exit();
+                        }
                                     
-                        $select_query = "SELECT * FROM quote WHERE quoteID ='$quoteID'";
-                        $result = mysqli_query($conn, $select_query);
-                        if (mysqli_num_rows($result) > 0) {
-                            // output data of each row
-                            while($row = mysqli_fetch_assoc($result)) {
-                                $quoteID = $row['quoteID'];
-                                $firstName = $row['firstName'];
-                                $lastName = $row['lastName'];
-                                $email = $row['email'];
-                                $phone = $row['phone'];
-                                $company = $row['company'];
-                                $service = $row['service'];
-                                $description = $row['description'];
-                                $requestDate = $row['requestDate'];
-                                $status = $row['status'];
-                                $date = strtotime($requestDate);
-                                switch ($status) {
-                                    case "Closed";
-                                        $class  = 'bg-danger';
-                                        $text  = 'text-danger';
-                                        break;
-                                    case "Open";
-                                        $class  = 'bg-success';
-                                        $text  = 'text-success';
-                                        break;
-                                    default:
-                                        $class  = '';
-                                }
+                        $stmt = $conn->prepare("SELECT * FROM quote WHERE quoteID = ?");
+                        $stmt->bind_param("i", $quoteID); // use "s" if not numeric
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        if ($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+
+                            $quoteID = $row['quoteID'];
+                            $firstName = $row['firstName'];
+                            $lastName = $row['lastName'];
+                            $email = $row['email'];
+                            $phone = $row['phone'];
+                            $company = $row['company'];
+                            $service = $row['service'];
+                            $description = $row['description'];
+                            $requestDate = $row['requestDate'];
+                            $status = $row['status'];
+
+                            $date = strtotime($requestDate);
+
+                            switch ($status) {
+                                case "Closed":
+                                    $class = 'bg-danger';
+                                    $text  = 'text-danger';
+                                    break;
+                                case "Open":
+                                    $class = 'bg-success';
+                                    $text  = 'text-success';
+                                    break;
+                                default:
+                                    $class = '';
                             }
+                        } else {
+                            $_SESSION['error_message'] = "Quote not found.";
+                            echo '<meta http-equiv="refresh" content="0; url=quote">';
+                            exit();
                         }
 
                     ?>
