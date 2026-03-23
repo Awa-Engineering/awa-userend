@@ -1,4 +1,5 @@
 <?php 
+require_once "./config/db.php";
 include "./components/header.php";
 include "./components/navbar-alt.php";
 ?>
@@ -23,161 +24,52 @@ include "./components/navbar-alt.php";
     <section class="space">
         <div class="container z-index-common">
             <div class="row gy-30">
+                <?php
+
+                    $select_query = "SELECT * FROM team";
+
+                    $result = mysqli_query($conn, $select_query);
+
+                    // Check for query errors
+                    if (!$result) {
+                        die("Query failed: " . mysqli_error($conn));
+                    }
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $teamID = $row['teamID'];
+                            $fullName = $row['fullName'];
+                            $designation = $row['designation'];
+                            $filePath = $row['filePath'];
+                        
+                ?>
                 <div class="col-lg-4 col-md-6">
                     <div class="th-team team-card style4">
                         <div class="img-wrap">
                             <div class="team-img">
-                                <img src="./assets/img/team1.jpg" alt="Team" style="height: 480px;">
-                            </div>
-                            <div class="th-social-wrap">
-                                <div class="th-social">
-                                    <a target="_blank" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a> 
-                                    <a target="_blank" href="https://twitter.com/"><i class="fab fa-twitter"></i></a> 
-                                    <a target="_blank" href="https://linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a target="_blank" href="https://youtube.com/"><i class="fab fa-youtube"></i></a> 
-                                    <a target="_blank" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                                </div>
-                                <img src="assets/img/icon/arrow-right.svg" alt="img">
+                                <img src="./admin/<?php echo $filePath; ?>" alt="Team" style="height: 480px;">
                             </div>
                         </div>
                         <div class="team-card-content d-flex justify-content-center">
                             <div class="media-left text-center">
-                                <h3 class="box-title">Victor William</h3>
-                                <span class="team-desig">Business Development</span>
+                                <h3 class="box-title"><?php echo $fullName; ?></h3>
+                                <span class="team-desig"><?php echo $designation; ?></span>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php
+                        }
+                    }
+                    else {
+                        echo
+                        "<div class='text-center mt-4'>
+                        <img src='./assets/img/empty.png' width='220'>
+                        <p class='lead mt-3'>No team portraits yet!</p>
+                        </div>";
+                    }
+                ?>
             
-                <div class="col-lg-4 col-md-6">
-                    <div class="th-team team-card style4">
-                        <div class="img-wrap">
-                            <div class="team-img">
-                                <img src="./assets/img/team2.jpg" alt="Team" style="height: 480px;">
-                            </div>
-                            <div class="th-social-wrap">
-                                <div class="th-social">
-                                    <a target="_blank" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a> 
-                                    <a target="_blank" href="https://twitter.com/"><i class="fab fa-twitter"></i></a> 
-                                    <a target="_blank" href="https://linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a target="_blank" href="https://youtube.com/"><i class="fab fa-youtube"></i></a> 
-                                    <a target="_blank" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                                </div>
-                                <img src="assets/img/icon/arrow-right.svg" alt="img">
-                            </div>
-                        </div>
-                        <div class="team-card-content d-flex justify-content-center">
-                            <div class="media-left text-center">
-                                <h3 class="box-title">Jacinta John</h3>
-                                <span class="team-desig">Legal Officer</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="th-team team-card style4">
-                        <div class="img-wrap">
-                            <div class="team-img">
-                                <img src="./assets/img/team3.jpg" alt="Team" style="height: 480px;">
-                            </div>
-                            <div class="th-social-wrap">
-                                <div class="th-social">
-                                    <a target="_blank" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a> 
-                                    <a target="_blank" href="https://twitter.com/"><i class="fab fa-twitter"></i></a> 
-                                    <a target="_blank" href="https://linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a target="_blank" href="https://youtube.com/"><i class="fab fa-youtube"></i></a> 
-                                    <a target="_blank" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                                </div>
-                                <img src="assets/img/icon/arrow-right.svg" alt="img">
-                            </div>
-                        </div>
-                        <div class="team-card-content d-flex justify-content-center">
-                            <div class="media-left text-center">
-                                <h3 class="box-title">Etim Edet</h3>
-                                <span class="team-desig">Laboratory Head</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="th-team team-card style4">
-                        <div class="img-wrap">
-                            <div class="team-img">
-                                <img src="./assets/img/team4.jpg" alt="Team" style="height: 480px;">
-                            </div>
-                            <div class="th-social-wrap">
-                                <div class="th-social">
-                                    <a target="_blank" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a> 
-                                    <a target="_blank" href="https://twitter.com/"><i class="fab fa-twitter"></i></a> 
-                                    <a target="_blank" href="https://linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a target="_blank" href="https://youtube.com/"><i class="fab fa-youtube"></i></a> 
-                                    <a target="_blank" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                                </div>
-                                <img src="assets/img/icon/arrow-right.svg" alt="img">
-                            </div>
-                        </div>
-                        <div class="team-card-content d-flex justify-content-center">
-                            <div class="media-left text-center">
-                                <h3 class="box-title">Janny Wilson</h3>
-                                <span class="team-desig">HR Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="th-team team-card style4">
-                        <div class="img-wrap">
-                            <div class="team-img">
-                                <img src="./assets/img/team5.jpg" alt="Team" style="height: 480px;">
-                            </div>
-                            <div class="th-social-wrap">
-                                <div class="th-social">
-                                    <a target="_blank" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a> 
-                                    <a target="_blank" href="https://twitter.com/"><i class="fab fa-twitter"></i></a> 
-                                    <a target="_blank" href="https://linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a target="_blank" href="https://youtube.com/"><i class="fab fa-youtube"></i></a> 
-                                    <a target="_blank" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                                </div>
-                                <img src="assets/img/icon/arrow-right.svg" alt="img">
-                            </div>
-                        </div>
-                        <div class="team-card-content d-flex justify-content-center">
-                            <div class="media-left text-center">
-                                <h3 class="box-title">Nina Henry</h3>
-                                <span class="team-desig">Lead Accountant</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="th-team team-card style4">
-                        <div class="img-wrap">
-                            <div class="team-img">
-                                <img src="./assets/img/team6.jpg" alt="Team" style="height: 480px;">
-                            </div>
-                            <div class="th-social-wrap">
-                                <div class="th-social">
-                                    <a target="_blank" href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a> 
-                                    <a target="_blank" href="https://twitter.com/"><i class="fab fa-twitter"></i></a> 
-                                    <a target="_blank" href="https://linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a target="_blank" href="https://youtube.com/"><i class="fab fa-youtube"></i></a> 
-                                    <a target="_blank" href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-                                </div>
-                                <img src="assets/img/icon/arrow-right.svg" alt="img">
-                            </div>
-                        </div>
-                        <div class="team-card-content d-flex justify-content-center">
-                            <div class="media-left text-center">
-                                <h3 class="box-title">Blessing Justin</h3>
-                                <span class="team-desig">QHSE Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

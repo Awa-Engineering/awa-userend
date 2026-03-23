@@ -1216,47 +1216,56 @@ if (isset($_POST['section_six_upload_btn'])) {
 //Team Member Image Query
 if (isset($_POST['member_upload_btn'])) {
 
-    $teamID = $conn->real_escape_string($_POST['teamID']);
+    $teamID   = $conn->real_escape_string($_POST['teamID']);
     $fileName = $_FILES['filePath']['name'];
-    $fileTmp = $_FILES['filePath']['tmp_name'];
+    $fileTmp  = $_FILES['filePath']['tmp_name'];
     $fileType = $_FILES['filePath']['type'];
-    
+
     $uploadDir = 'upload/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+    // Build target path
     $targetPath = $uploadDir . $conn->real_escape_string($fileName);
 
-    // If file exists, rename to avoid overwrite
+    // Rename file if it already exists
     if (file_exists($targetPath)) {
-        $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
-        $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
+        $uniqueName  = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
+        $targetPath  = $uploadDir . $conn->real_escape_string($uniqueName);
     }
 
-    // Only accept image files
+    // Only allow images
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
-        echo "<meta http-equiv='refresh' content='0; URL=edit-team?id=$teamID'>";
+        header("Location: edit-team?id=$teamID");
         exit();
     }
 
-    // Check if entry already exists for this team member in `team` table
-    $sql = mysqli_query($conn, "SELECT * FROM team WHERE teamID = '$teamID'");
-    $result = mysqli_fetch_array($sql);
+    // Check if team member exists
+    $sql    = mysqli_query($conn, "SELECT filePath FROM team WHERE teamID = '$teamID'");
+    $result = mysqli_fetch_assoc($sql);
 
     if ($result) {
-        // UPDATE existing team member record
+        // Delete old image if it exists
+        if (!empty($result['filePath']) && file_exists($result['filePath'])) {
+            unlink($result['filePath']);
+        }
+
+        // Update database with new image path
         $update = mysqli_query($conn, "UPDATE team SET filePath = '$targetPath' WHERE teamID = '$teamID'");
 
         if ($update) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Team member image updated successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to update team member image: " . mysqli_error($conn);
         }
+
     } else {
-        // INSERT new team membero record
+        // Insert new team member record
         $insert = mysqli_query($conn, "INSERT INTO team (teamID, filePath) VALUES ('$teamID', '$targetPath')");
 
         if ($insert) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Team member image uploaded successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to insert team member image: " . mysqli_error($conn);
@@ -1264,7 +1273,7 @@ if (isset($_POST['member_upload_btn'])) {
     }
 
     // Redirect back
-    echo "<meta http-equiv='refresh' content='0; URL=edit-team?id=$teamID'>";
+    header("Location: edit-team?id=$teamID");
     exit();
 }
 
