@@ -62,6 +62,7 @@
                     </div>
 
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $quoteID; ?>">
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2"><label class="form-label">Full Name</label></div>
                             <div class="col-md-8 col-xl-5">
@@ -128,6 +129,7 @@
                                         <button type="submit" name="update_quote_btn" class="btn btn-dark">Mark as closed</button>
                                     </form>
                                 </div>
+                                
                                 <button type="button" data-id="<? echo $quoteID; ?>" onclick="confirmQuoteDelete(this);" class="button btn btn-danger"><i class="bi bi-trash"></i> Delete Request</button>
                             </div>
                         </div>
