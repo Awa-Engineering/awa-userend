@@ -54,25 +54,39 @@ if (isset($_POST['delete_support_btn'])) {
 // Delete Quote script
 if (isset($_POST['delete_quote_btn'])) {
 
-    $id = $_GET['id'];
+    if (isset($_POST['id'])) {
 
-    $id = $conn->real_escape_string($_POST['id']);
+        $id = $_POST['id'];
 
-    $query = "DELETE FROM quote WHERE quoteID = '$id'";
-    $result = mysqli_query($conn, $query);
+        // Validate ID (assuming it's numeric)
+        if (!is_numeric($id)) {
+            $_SESSION['error_message'] = "Invalid ID.";
+            header("Location: quote");
+            exit();
+        }
 
-    if (mysqli_affected_rows($conn) > 0 ) {
-        $_SESSION['success_message'] = "Quotation Request Deleted";
-        echo "<meta http-equiv='refresh' content='0; URL=quote'>";
+        // Use prepared statement
+        $stmt = $conn->prepare("DELETE FROM quote WHERE quoteID = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['success_message'] = "Quotation Request Deleted";
+        } else {
+            $_SESSION['error_message'] = "Error deleting quote request.";
+        }
+
+        $stmt->close();
+
+        header("Location: quote");
         exit();
-    }else{
-        $_SESSION['error_message'] = "Error deleting quote request.";
-        echo "<meta http-equiv='refresh' content='0; URL=quote'>";
+
+    } else {
+        $_SESSION['error_message'] = "No ID provided.";
+        header("Location: quote");
         exit();
     }
-
 }
-
 
 
 // Delete Certificate script
