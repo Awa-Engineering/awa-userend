@@ -61,7 +61,7 @@ if (isset($_POST['delete_quote_btn'])) {
         // Validate ID (assuming it's numeric)
         if (!is_numeric($id)) {
             $_SESSION['error_message'] = "Invalid ID.";
-            header("Location: quote");
+            echo '<meta http-equiv="refresh" content="0; url=quote">';
             exit();
         }
 
@@ -78,12 +78,12 @@ if (isset($_POST['delete_quote_btn'])) {
 
         $stmt->close();
 
-        header("Location: quote");
+        echo '<meta http-equiv="refresh" content="0; url=quote">';
         exit();
 
     } else {
         $_SESSION['error_message'] = "No ID provided.";
-        header("Location: quote");
+        echo '<meta http-equiv="refresh" content="0; url=quote">';
         exit();
     }
 }
