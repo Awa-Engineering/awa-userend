@@ -12,7 +12,6 @@ if (isset($_POST['new_enquiry_btn'])) {
     $phone = $conn->real_escape_string($_POST['phone']);
     $subject = $conn->real_escape_string($_POST['subject']);
     $request = $conn->real_escape_string($_POST['request']);
-    $status = $conn->real_escape_string($_POST['status']);
 
 
     $query = "INSERT INTO support (firstName, lastName, email, phone, subject, request, status) 
