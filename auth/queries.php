@@ -35,7 +35,7 @@ if (isset($_POST['new_quote_btn'])) {
     $phone = $conn->real_escape_string($_POST['phone']);
     $company = $conn->real_escape_string($_POST['company']);
     $service = $conn->real_escape_string($_POST['service']);
-    $description = $conn->real_escape_string($_POST['description']
+    $description = $conn->real_escape_string($_POST['description']);
 
 
     $query = "INSERT INTO quote (firstName, lastName, email, phone, company, service, description, status) 
