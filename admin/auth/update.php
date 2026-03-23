@@ -98,29 +98,29 @@ include "./config/db.php";
     //Update Quote Query
     if (isset($_POST['update_quote_btn'])) {
 
-        $quoteID = isset($_GET['quoteID']) ? $_GET['quoteID'] : '';
+        $quoteID = $_POST['quoteID'];
 
-        $quoteID = $conn->real_escape_string($_POST['quoteID']);
-        $status = $conn->real_escape_string($_POST['status']);
+        // Check if quote exists
+        $stmt = $conn->prepare("SELECT * FROM quote WHERE quoteID = ?");
+        $stmt->bind_param("s", $quoteID);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
+        if ($result->num_rows > 0) {
 
-        $sql=mysqli_query($conn,"SELECT * FROM quote where quoteID='$quoteID'");
-        $result=mysqli_fetch_array($sql);
-        if($result>0){
-            $conn=mysqli_query($conn,"UPDATE quote SET status='Closed' WHERE quoteID='$quoteID'");
+            // Update status
+            $updateStmt = $conn->prepare("UPDATE quote SET status = 'Closed' WHERE quoteID = ?");
+            $updateStmt->bind_param("s", $quoteID);
+            $updateStmt->execute();
 
             $_SESSION['success_message'] = "Quote Request Closed";
-            echo "<meta http-equiv='refresh' content='0; URL=view-quote?id=$quoteID'>";
-            exit();
 
-        }else {
-
-            $_SESSION['error_message'] = "Error closing quote request".mysqli_error($conn);
-            echo "<meta http-equiv='refresh' content='0; URL=view-quote?id=$quoteID'>";
-            exit();
-
+        } else {
+            $_SESSION['error_message'] = "Quote not found";
         }
 
+        header("Location: view-quote?id=" . $quoteID);
+        exit();
     }
 
 

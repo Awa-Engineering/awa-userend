@@ -15,11 +15,11 @@
 
                         $quoteID = $_GET['id'] ?? '';
 
-                        // if (empty($quoteID)) {
-                        //     $_SESSION['error_message'] = "No quote selected.";
-                        //     echo '<meta http-equiv="refresh" content="0; url=quote">';
-                        //     exit();
-                        // }
+                        if (empty($quoteID)) {
+                            $_SESSION['error_message'] = "No quote selected.";
+                            echo '<meta http-equiv="refresh" content="0; url=quote">';
+                            exit();
+                        }
                                     
                         $stmt = $conn->prepare("SELECT * FROM quote WHERE quoteID = ?");
                         $stmt->bind_param("i", $quoteID); // use "s" if not numeric
