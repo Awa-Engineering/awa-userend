@@ -17,10 +17,14 @@ function confirmSupportDelete(self) {
 
 
 //Quote Delete Trigger
-function confirmQuoteDelete(self) {
-    var id = self.getAttribute("data-id");
+function confirmQuoteDelete(button) {
+    // Get the quote ID from button
+    var id = button.getAttribute("data-id");
 
-    document.getElementById("form-delete-quote").id.value = id;
+    // Select the hidden input inside the form and set its value
+    document.querySelector('#form-delete-quote input[name="id"]').value = id;
+
+    // Show the Bootstrap modal
     $("#quoteDeleteModal").modal("show");
 }
 

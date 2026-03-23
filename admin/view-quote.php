@@ -76,7 +76,7 @@
                     </div>
 
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
-                        <input type="hidden" name="quoteID" value="<?php echo $quoteID; ?>">
+                        <input type="hidden" name="id" value="<?php echo $quoteID; ?>">
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2"><label class="form-label">Full Name</label></div>
                             <div class="col-md-8 col-xl-5">
@@ -122,7 +122,7 @@
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2"><label class="form-label">Status</label></div>
                             <div class="col-md-8 col-xl-5">
-                                <span class="badge <? echo $class; ?> bg-opacity-25 text-xs <? echo $text; ?>"><?php echo $status; ?></span>
+                                <span class="badge <?php echo $class; ?> bg-opacity-25 text-xs <?php echo $text; ?>"><?php echo $status; ?></span>
                             </div>
                         </div>
                         <div class="row mb-6">
