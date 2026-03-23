@@ -164,23 +164,41 @@ if (isset($_POST['delete_certificate_btn'])) {
 // Delete Team script
 if (isset($_POST['delete_team_btn'])) {
 
-    $id = $_GET['id'];
+    // Get team ID safely
+    $id = intval($_POST['id']); // cast to integer
 
-    $id = $conn->real_escape_string($_POST['id']);
+    // Get image path first
+    $stmt = $conn->prepare("SELECT filePath FROM team WHERE teamID = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
 
-    $query = "DELETE FROM team WHERE teamID = '$id'";
-    $result = mysqli_query($conn, $query);
+    if ($result) {
+        // Delete image file if it exists
+        if (!empty($result['filePath']) && file_exists($result['filePath'])) {
+            unlink($result['filePath']);
+        }
 
-    if (mysqli_affected_rows($conn) > 0 ) {
-        $_SESSION['success_message'] = "Team Member Deleted";
-        echo "<meta http-equiv='refresh' content='0; URL=team'>";
-        exit();
-    }else{
-        $_SESSION['error_message'] = "Error deleting team member.";
-        echo "<meta http-equiv='refresh' content='0; URL=team'>";
-        exit();
+        // Delete database row
+        $stmt = $conn->prepare("DELETE FROM team WHERE teamID = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['success_message'] = "Team member deleted successfully.";
+        } else {
+            $_SESSION['error_message'] = "Error deleting team member.";
+        }
+
+        $stmt->close();
+    } else {
+        $_SESSION['error_message'] = "Team member not found.";
     }
 
+    // Redirect back to team page using meta refresh
+    echo "<meta http-equiv='refresh' content='0; URL=team'>";
+    exit();
 }
 
 

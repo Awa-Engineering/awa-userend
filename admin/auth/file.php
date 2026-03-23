@@ -1236,7 +1236,7 @@ if (isset($_POST['member_upload_btn'])) {
     // Only allow images
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
-        header("Location: edit-team?id=$teamID");
+        echo "<meta http-equiv='refresh' content='0; URL=edit-team?id=$teamID'>";
         exit();
     }
 
@@ -1273,7 +1273,7 @@ if (isset($_POST['member_upload_btn'])) {
     }
 
     // Redirect back
-    header("Location: edit-team?id=$teamID");
+    echo "<meta http-equiv='refresh' content='0; URL=edit-team?id=$teamID'>";
     exit();
 }
 
