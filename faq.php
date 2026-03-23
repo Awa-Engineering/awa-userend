@@ -54,7 +54,6 @@ include "./components/navbar-alt.php";
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     $faqID = $row['faqID'];
                                     $question = $row['question'];
-                                    $designation = $row['designation'];
                                     $answer = $row['answer'];
                                 
                         ?>
