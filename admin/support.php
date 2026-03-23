@@ -81,10 +81,10 @@
                                                                 <td><?php echo $email; ?></td>
                                                                 <td><?php echo $phone; ?></td>
                                                                 <td><?php echo date('j F Y', $date); ?></td>
-                                                                <td><span class="badge <? echo $class; ?> bg-opacity-25 text-xs <? echo $text; ?>"><?php echo $status; ?></span></td>
+                                                                <td><span class="badge <?php echo $class; ?> bg-opacity-25 text-xs <?php echo $text; ?>"><?php echo $status; ?></span></td>
                                                                 <td class="text-end">
                                                                     <a href="view-support?id=<?php echo $supportID; ?>" class='btn btn-dark btn-sm'><i class="bi bi-eye"></i></a>
-                                                                    <button type="button" data-id="<? echo $supportID; ?>" onclick="confirmSupportDelete(this);" class='btn btn-danger btn-sm'><i class="bi bi-trash"></i></button>
+                                                                    <button type="button" data-id="<?php echo $supportID; ?>" onclick="confirmSupportDelete(this);" class='btn btn-danger btn-sm'><i class="bi bi-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                     <?php
