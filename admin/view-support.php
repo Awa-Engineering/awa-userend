@@ -13,36 +13,55 @@
                 <main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
                     <?php
 
-                        $supportID = $_GET['id'];
-                                    
-                        $select_query = "SELECT * FROM support WHERE supportID ='$supportID'";
-                        $result = mysqli_query($conn, $select_query);
-                        if (mysqli_num_rows($result) > 0) {
-                            // output data of each row
-                            while($row = mysqli_fetch_assoc($result)) {
-                                $supportID = $row['supportID'];
-                                $firstName = $row['firstName'];
-                                $lastName = $row['lastName'];
-                                $email = $row['email'];
-                                $phone = $row['phone'];
-                                $subject = $row['subject'];
-                                $request = $row['request'];
-                                $requestDate = $row['requestDate'];
-                                $status = $row['status'];
-                                $date = strtotime($requestDate);
-                                switch ($status) {
-                                    case "Closed";
-                                        $class  = 'bg-danger';
-                                        $text  = 'text-danger';
-                                        break;
-                                    case "Open";
-                                        $class  = 'bg-success';
-                                        $text  = 'text-success';
-                                        break;
-                                    default:
-                                        $class  = '';
-                                }
+                        $supportID = $_GET['id'] ?? '';
+
+                        if (empty($supportID)) {
+                            $_SESSION['error_message'] = "No support request selected.";
+                            echo '<meta http-equiv="refresh" content="0; url=support">';
+                            exit();
+                        }
+
+                        // Prepare statement
+                        $stmt = $conn->prepare("SELECT * FROM support WHERE supportID = ?");
+                        $stmt->bind_param("i", $supportID); // use "s" if supportID is not numeric
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        if ($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+
+                            $supportID   = $row['supportID'];
+                            $firstName   = $row['firstName'];
+                            $lastName    = $row['lastName'];
+                            $email       = $row['email'];
+                            $phone       = $row['phone'];
+                            $subject     = $row['subject'];
+                            $request     = $row['request'];
+                            $requestDate = $row['requestDate'];
+                            $status      = $row['status'];
+
+                            $date = strtotime($requestDate);
+
+                            switch ($status) {
+                                case "Closed":
+                                    $class = 'bg-danger';
+                                    $text  = 'text-danger';
+                                    break;
+
+                                case "Open":
+                                    $class = 'bg-success';
+                                    $text  = 'text-success';
+                                    break;
+
+                                default:
+                                    $class = '';
+                                    $text  = '';
                             }
+
+                        } else {
+                            $_SESSION['error_message'] = "Support request not found.";
+                            echo '<meta http-equiv="refresh" content="0; url=support">';
+                            exit();
                         }
 
                     ?>
@@ -61,6 +80,7 @@
                     </div>
 
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $supportID; ?>">
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2"><label class="form-label">Full Name</label></div>
                             <div class="col-md-8 col-xl-5">
