@@ -30,25 +30,39 @@ if (isset($_POST['delete_admin_btn'])) {
 // Delete Support script
 if (isset($_POST['delete_support_btn'])) {
 
-    $id = $_GET['id'];
+    if (isset($_POST['id'])) {
 
-    $id = $conn->real_escape_string($_POST['id']);
+        $id = $_POST['id'];
 
-    $query = "DELETE FROM support WHERE supportID = '$id'";
-    $result = mysqli_query($conn, $query);
+        // Validate ID (assuming it's numeric)
+        if (!is_numeric($id)) {
+            $_SESSION['error_message'] = "Invalid ID.";
+            echo '<meta http-equiv="refresh" content="0; url=support">';
+            exit();
+        }
 
-    if (mysqli_affected_rows($conn) > 0 ) {
-        $_SESSION['success_message'] = "Support Enquiry Deleted";
-        echo "<meta http-equiv='refresh' content='0; URL=support'>";
+        // Use prepared statement
+        $stmt = $conn->prepare("DELETE FROM support WHERE supportID = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['success_message'] = "Support Request Deleted";
+        } else {
+            $_SESSION['error_message'] = "Error deleting support request.";
+        }
+
+        $stmt->close();
+
+        echo '<meta http-equiv="refresh" content="0; url=support">';
         exit();
-    }else{
-        $_SESSION['error_message'] = "Error support enquiry.";
-        echo "<meta http-equiv='refresh' content='0; URL=support'>";
+
+    } else {
+        $_SESSION['error_message'] = "No ID provided.";
+        echo '<meta http-equiv="refresh" content="0; url=support">';
         exit();
     }
-
 }
-
 
 
 // Delete Quote script
@@ -61,7 +75,7 @@ if (isset($_POST['delete_quote_btn'])) {
         // Validate ID (assuming it's numeric)
         if (!is_numeric($id)) {
             $_SESSION['error_message'] = "Invalid ID.";
-            header("Location: quote");
+            echo '<meta http-equiv="refresh" content="0; url=quote">';
             exit();
         }
 
