@@ -129,8 +129,11 @@
                                         <button type="submit" name="update_quote_btn" class="btn btn-dark">Mark as closed</button>
                                     </form>
                                 </div>
-                                
-                                <button type="button" data-id="<? echo $quoteID; ?>" onclick="confirmQuoteDelete(this);" class="button btn btn-danger"><i class="bi bi-trash"></i> Delete Request</button>
+                                <a href="quote-details.php?delete_id=<?php echo $quoteID; ?>" 
+                                    class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to delete this quote?');">
+                                    <i class="bi bi-trash"></i> Delete Request
+                                </a>
                             </div>
                         </div>
                     </form>

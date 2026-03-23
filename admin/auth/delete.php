@@ -52,40 +52,30 @@ if (isset($_POST['delete_support_btn'])) {
 
 
 // Delete Quote script
-if (isset($_POST['delete_quote_btn'])) {
+if (isset($_GET['delete_id'])) {
 
-    if (isset($_POST['id'])) {
+    $id = $_GET['delete_id'];
 
-        $id = $_POST['id'];
-
-        // Validate ID (assuming it's numeric)
-        if (!is_numeric($id)) {
-            $_SESSION['error_message'] = "Invalid ID.";
-            echo '<meta http-equiv="refresh" content="0; url=quote">';
-            exit();
-        }
-
-        // Use prepared statement
-        $stmt = $conn->prepare("DELETE FROM quote WHERE quoteID = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            $_SESSION['success_message'] = "Quotation Request Deleted";
-        } else {
-            $_SESSION['error_message'] = "Error deleting quote request.";
-        }
-
-        $stmt->close();
-
-        echo '<meta http-equiv="refresh" content="0; url=quote">';
-        exit();
-
-    } else {
-        $_SESSION['error_message'] = "No ID provided.";
+    if (empty($id)) {
+        $_SESSION['error_message'] = "Invalid ID.";
         echo '<meta http-equiv="refresh" content="0; url=quote">';
         exit();
     }
+
+    $stmt = $conn->prepare("DELETE FROM quote WHERE quoteID = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        $_SESSION['success_message'] = "Quotation Request Deleted";
+    } else {
+        $_SESSION['error_message'] = "Error deleting quote request.";
+    }
+
+    $stmt->close();
+
+    echo '<meta http-equiv="refresh" content="0; url=quote">';
+    exit();
 }
 
 
