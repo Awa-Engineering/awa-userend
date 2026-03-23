@@ -69,27 +69,29 @@ include "./config/db.php";
     //Update Support Query
     if (isset($_POST['update_support_btn'])) {
 
-        $supportID = isset($_GET['supportID']) ? $_GET['supportID'] : '';
+        $supportID = $_POST['supportID'];
 
-        $supportID = $conn->real_escape_string($_POST['supportID']);
+        // Check if support exists
+        $stmt = $conn->prepare("SELECT * FROM support WHERE supportID = ?");
+        $stmt->bind_param("s", $supportID);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
+        if ($result->num_rows > 0) {
 
-        $sql=mysqli_query($conn,"SELECT * FROM support where supportID='$supportID'");
-        $result=mysqli_fetch_array($sql);
-        if($result>0){
-            $conn=mysqli_query($conn,"UPDATE support SET status='Closed' WHERE supportID='$supportID'");
+            // Update status
+            $updateStmt = $conn->prepare("UPDATE support SET status = 'Closed' WHERE supportID = ?");
+            $updateStmt->bind_param("s", $supportID);
+            $updateStmt->execute();
 
-            $_SESSION['success_message'] = "Support Enquiry Closed";
-            echo "<meta http-equiv='refresh' content='0; URL=view-support?id=$supportID'>";
-            exit();
+            $_SESSION['success_message'] = "Support Request Closed";
 
-        }else {
-
-            $_SESSION['error_message'] = "Error closing support enquiry".mysqli_error($conn);
-            echo "<meta http-equiv='refresh' content='0; URL=view-support?id=$supportID'>";
-            exit();
-
+        } else {
+            $_SESSION['error_message'] = "Support not found";
         }
+
+        echo "<meta http-equiv='refresh' content='0; URL=view-support?id=$supportID'>";
+        exit();
 
     }
 
