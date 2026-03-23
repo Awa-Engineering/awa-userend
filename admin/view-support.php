@@ -120,7 +120,7 @@
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2"><label class="form-label">Status</label></div>
                             <div class="col-md-8 col-xl-5">
-                                <span class="badge <? echo $class; ?> bg-opacity-25 text-xs <? echo $text; ?>"><?php echo $status; ?></span>
+                                <span class="badge <?php echo $class; ?> bg-opacity-25 text-xs <?php echo $text; ?>"><?php echo $status; ?></span>
                             </div>
                         </div>
                         <div class="row mb-6">
@@ -141,7 +141,7 @@
                                         <button type="submit" name="update_support_btn" class="btn btn-dark">Mark as closed</button>
                                     </form>
                                 </div>
-                                <button type="button" data-id="<? echo $supportID; ?>" onclick="confirmSupportDelete(this);" class="button btn btn-danger"><i class="bi bi-trash"></i> Delete Request</button>
+                                <button type="button" data-id="<?php echo $supportID; ?>" onclick="confirmSupportDelete(this);" class="button btn btn-danger"><i class="bi bi-trash"></i> Delete Request</button>
                             </div>
                         </div>
                     </form>
