@@ -373,64 +373,44 @@ include "./config/db.php";
     }
 
 
-    //Update CEO Quote Section Query
-    if (isset($_POST['update_ceo_quote_btn'])) {
-
-        $ceoID = isset($_GET['ceoID']) ? $_GET['ceoID'] : '';
-
-        $ceoID = $conn->real_escape_string($_POST['ceoID']);
-        $quoteTitle = $conn->real_escape_string($_POST['quoteTitle']);
-        $quote = $conn->real_escape_string($_POST['quote']);
-
-
-        $sql=mysqli_query($conn,"SELECT * FROM ceo where ceoID='$ceoID'");
-        $result=mysqli_fetch_array($sql);
-        if($result>0){
-            $conn=mysqli_query($conn,"UPDATE ceo SET quoteTitle='$quoteTitle', quote='$quote' WHERE ceoID='$ceoID'");
-
-            $_SESSION['success_message'] = "Quote Updated";
-            echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
-            exit();
-
-        }else {
-
-            $_SESSION['error_message'] = "Error updating quote".mysqli_error($conn);
-            echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
-            exit();
-
-        }
-
-    }
-
 
     //Update CEO Section One Query
     if (isset($_POST['update_ceo_sectionOne_btn'])) {
 
-        $ceoID = isset($_GET['ceoID']) ? $_GET['ceoID'] : '';
+        // Collect inputs safely
+        $title = trim($_POST['title'] ?? '');
+        $text  = trim($_POST['text'] ?? '');
 
-        $ceoID = $conn->real_escape_string($_POST['ceoID']);
-        $title = $conn->real_escape_string($_POST['title']);
-        $subTitle = $conn->real_escape_string($_POST['subTitle']);
-        $text = $conn->real_escape_string($_POST['text']);
+        // Check if any row exists in the CEO table
+        $stmt = $conn->prepare("SELECT ceoID FROM ceo LIMIT 1");
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
 
+        if ($result) {
+            // Row exists → UPDATE
+            $ceoID = $result['ceoID'];
 
-        $sql=mysqli_query($conn,"SELECT * FROM ceo where ceoID='$ceoID'");
-        $result=mysqli_fetch_array($sql);
-        if($result>0){
-            $conn=mysqli_query($conn,"UPDATE ceo SET title='$title', subTitle='$subTitle', text='$text' WHERE ceoID='$ceoID'");
+            $stmt = $conn->prepare("UPDATE ceo SET title = ?, text = ? WHERE ceoID = ?");
+            $stmt->bind_param("ssi", $title, $text, $ceoID);
+            $stmt->execute();
+            $stmt->close();
 
-            $_SESSION['success_message'] = "Section One Updated";
-            echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
-            exit();
+            $_SESSION['success_message'] = "Section One updated successfully.";
 
-        }else {
+        } else {
+            // No row exists → INSERT
+            $stmt = $conn->prepare("INSERT INTO ceo (title, text) VALUES (?, ?)");
+            $stmt->bind_param("ss", $title, $text);
+            $stmt->execute();
+            $stmt->close();
 
-            $_SESSION['error_message'] = "Error updating section one".mysqli_error($conn);
-            echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
-            exit();
-
+            $_SESSION['success_message'] = "Section One created successfully.";
         }
 
+        // Redirect back
+        header("Location: ceo");
+        exit();
     }
 
 

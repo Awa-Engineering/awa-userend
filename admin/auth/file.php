@@ -58,7 +58,7 @@ if (isset($_POST['breadcrumb_upload_btn'])) {
 }
 
 
-//About Breadcrumb Query
+// About Breadcrumb Query
 if (isset($_POST['about_breadcrumb_upload_btn'])) {
 
     $aboutID = $conn->real_escape_string($_POST['aboutID']);
@@ -67,48 +67,55 @@ if (isset($_POST['about_breadcrumb_upload_btn'])) {
     $fileType = $_FILES['breadcrumb']['type'];
     
     $uploadDir = 'media/';
-    $targetPath = $uploadDir . $conn->real_escape_string($fileName);
+    $targetPath = $uploadDir . basename($fileName);
 
-    // If file exists, rename to avoid overwrite
+    // Rename if file exists
     if (file_exists($targetPath)) {
         $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
-        $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
+        $targetPath = $uploadDir . $uniqueName;
     }
 
-    // Only accept image files
+    // Validate image
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
         echo "<meta http-equiv='refresh' content='0; URL=about'>";
         exit();
     }
 
-    // Check if entry already exists for this about in `breadcrumb` table
+    // Check existing record
     $sql = mysqli_query($conn, "SELECT * FROM about WHERE aboutID = '$aboutID'");
-    $result = mysqli_fetch_array($sql);
+    $result = mysqli_fetch_assoc($sql);
 
     if ($result) {
-        // UPDATE existing breadcrumb record
+
+        // DELETE OLD IMAGE (important part)
+        if (!empty($result['breadcrumb']) && file_exists($result['breadcrumb'])) {
+            unlink($result['breadcrumb']);
+        }
+
+        // UPDATE record
         $update = mysqli_query($conn, "UPDATE about SET breadcrumb = '$targetPath' WHERE aboutID = '$aboutID'");
 
         if ($update) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Breadcrumb image updated successfully.";
         } else {
-            $_SESSION['error_message'] = "Failed to update breadcrumb image: " . mysqli_error($conn);
+            $_SESSION['error_message'] = "Failed to update: " . mysqli_error($conn);
         }
+
     } else {
-        // INSERT new breadcrumb record
-        $insert = mysqli_query($conn, "INSERT INTO about (breadcrumb) VALUES ('$targetPath')");
+
+        // INSERT new record
+        $insert = mysqli_query($conn, "INSERT INTO about (aboutID, breadcrumb) VALUES ('$aboutID', '$targetPath')");
 
         if ($insert) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Breadcrumb image uploaded successfully.";
         } else {
-            $_SESSION['error_message'] = "Failed to insert breadcrumb image: " . mysqli_error($conn);
+            $_SESSION['error_message'] = "Failed to insert: " . mysqli_error($conn);
         }
     }
 
-    // Redirect back
     echo "<meta http-equiv='refresh' content='0; URL=about'>";
     exit();
 }
@@ -117,47 +124,69 @@ if (isset($_POST['about_breadcrumb_upload_btn'])) {
 //CEO Breadcrumb Query
 if (isset($_POST['ceo_breadcrumb_upload_btn'])) {
 
-    $ceoID = $conn->real_escape_string($_POST['ceoID']);
-    $fileName = $_FILES['breadcrumb']['name'];
-    $fileTmp = $_FILES['breadcrumb']['tmp_name'];
-    $fileType = $_FILES['breadcrumb']['type'];
-    
-    $uploadDir = 'media/';
-    $targetPath = $uploadDir . $conn->real_escape_string($fileName);
+    // Validate ceoID from hidden input (optional for new CEO)
+    $ceoID = isset($_POST['ceoID']) && $_POST['ceoID'] !== '' 
+        ? (int) $_POST['ceoID'] 
+        : null;
 
-    // If file exists, rename to avoid overwrite
-    if (file_exists($targetPath)) {
-        $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
-        $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
+    // Check if a file was uploaded
+    if (!isset($_FILES['breadcrumb']) || $_FILES['breadcrumb']['error'] !== UPLOAD_ERR_OK) {
+        $_SESSION['error_message'] = "No image uploaded or upload error.";
+        echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
+        exit();
     }
+
+    // File details
+    $fileTmp  = $_FILES['breadcrumb']['tmp_name'];
+    $fileName = basename($_FILES['breadcrumb']['name']);
+    $fileType = $_FILES['breadcrumb']['type'];
+
+    $uploadDir  = 'media/';
+    $targetPath = $uploadDir . $fileName;
 
     // Only accept image files
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
-        echo "<meta http-equiv='refresh' content='0; URL=about'>";
+        echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
         exit();
     }
 
-    // Check if entry already exists for this ceo in `breadcrumb` table
-    $sql = mysqli_query($conn, "SELECT * FROM ceo WHERE ceoID = '$ceoID'");
+    // Ensure upload directory exists
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    // Check if a record exists for this CEO
+    $sql = null;
+    if ($ceoID !== null) {
+        $sql = mysqli_query($conn, "SELECT * FROM ceo WHERE ceoID = '$ceoID'");
+    } else {
+        $sql = mysqli_query($conn, "SELECT * FROM ceo LIMIT 1");
+    }
+
     $result = mysqli_fetch_array($sql);
 
     if ($result) {
-        // UPDATE existing breadcrumb record
-        $update = mysqli_query($conn, "UPDATE ceo SET breadcrumb = '$targetPath' WHERE ceoID = '$ceoID'");
+        // Record exists → DELETE previous image if exists
+        if (!empty($result['breadcrumb']) && file_exists($result['breadcrumb'])) {
+            unlink($result['breadcrumb']);
+        }
 
+        // UPDATE existing record
+        $updateID = $result['ceoID'];
+        $update = mysqli_query($conn, "UPDATE ceo SET breadcrumb = '$targetPath' WHERE ceoID = '$updateID'");
         if ($update) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Breadcrumb image updated successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to update breadcrumb image: " . mysqli_error($conn);
         }
-    } else {
-        // INSERT new breadcrumb record
-        $insert = mysqli_query($conn, "INSERT INTO ceo (breadcrumb) VALUES ('$targetPath')");
 
+    } else {
+        // No record exists → INSERT new row
+        $insert = mysqli_query($conn, "INSERT INTO ceo (breadcrumb) VALUES ('$targetPath')");
         if ($insert) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Breadcrumb image uploaded successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to insert breadcrumb image: " . mysqli_error($conn);
@@ -168,6 +197,7 @@ if (isset($_POST['ceo_breadcrumb_upload_btn'])) {
     echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
     exit();
 }
+
 
 
 //Careers Breadcrumb Query
@@ -341,50 +371,72 @@ if (isset($_POST['career_innerSectionOne_upload_btn'])) {
 //CEO Image Query
 if (isset($_POST['ceo_sectionOne_upload_btn'])) {
 
-    $ceoID = $conn->real_escape_string($_POST['ceoID']);
-    $fileName = $_FILES['ceoImage']['name'];
-    $fileTmp = $_FILES['ceoImage']['tmp_name'];
-    $fileType = $_FILES['ceoImage']['type'];
-    
-    $uploadDir = 'media/';
-    $targetPath = $uploadDir . $conn->real_escape_string($fileName);
+    // Validate ceoID from hidden input (optional for new CEO)
+    $ceoID = isset($_POST['ceoID']) && $_POST['ceoID'] !== '' 
+        ? (int) $_POST['ceoID'] 
+        : null;
 
-    // If file exists, rename to avoid overwrite
-    if (file_exists($targetPath)) {
-        $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
-        $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
+    // Check if a file was uploaded
+    if (!isset($_FILES['ceoImage']) || $_FILES['ceoImage']['error'] !== UPLOAD_ERR_OK) {
+        $_SESSION['error_message'] = "No image uploaded or upload error.";
+        echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
+        exit();
     }
+
+    // File details
+    $fileTmp  = $_FILES['ceoImage']['tmp_name'];
+    $fileName = basename($_FILES['ceoImage']['name']);
+    $fileType = $_FILES['ceoImage']['type'];
+
+    $uploadDir  = 'media/';
+    $targetPath = $uploadDir . $fileName;
 
     // Only accept image files
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
-        echo "<meta http-equiv='refresh' content='0; URL=about'>";
+        echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
         exit();
     }
 
-    // Check if entry already exists for this ceo in `ceo's image` table
-    $sql = mysqli_query($conn, "SELECT * FROM ceo WHERE ceoID = '$ceoID'");
+    // Ensure upload directory exists
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    // Check if a record exists for this CEO
+    $sql = null;
+    if ($ceoID !== null) {
+        $sql = mysqli_query($conn, "SELECT * FROM ceo WHERE ceoID = '$ceoID'");
+    } else {
+        $sql = mysqli_query($conn, "SELECT * FROM ceo LIMIT 1");
+    }
+
     $result = mysqli_fetch_array($sql);
 
     if ($result) {
-        // UPDATE existing ceo's image record
-        $update = mysqli_query($conn, "UPDATE ceo SET ceoImage = '$targetPath' WHERE ceoID = '$ceoID'");
-
-        if ($update) {
-            copy($fileTmp, $targetPath);
-            $_SESSION['success_message'] = "CEO's image updated successfully.";
-        } else {
-            $_SESSION['error_message'] = "Failed to update ceo's image: " . mysqli_error($conn);
+        // Record exists → DELETE previous image if exists
+        if (!empty($result['ceoImage']) && file_exists($result['ceoImage'])) {
+            unlink($result['ceoImage']);
         }
-    } else {
-        // INSERT new ceo's image record
-        $insert = mysqli_query($conn, "INSERT INTO ceo (ceoImage) VALUES ('$targetPath')");
 
-        if ($insert) {
-            copy($fileTmp, $targetPath);
-            $_SESSION['success_message'] = "CEO's image uploaded successfully.";
+        // UPDATE existing record
+        $updateID = $result['ceoID'];
+        $update = mysqli_query($conn, "UPDATE ceo SET ceoImage = '$targetPath' WHERE ceoID = '$updateID'");
+        if ($update) {
+            move_uploaded_file($fileTmp, $targetPath);
+            $_SESSION['success_message'] = "CEO image updated successfully.";
         } else {
-            $_SESSION['error_message'] = "Failed to insert ceo's image: " . mysqli_error($conn);
+            $_SESSION['error_message'] = "Failed to update CEO image: " . mysqli_error($conn);
+        }
+
+    } else {
+        // No record exists → INSERT new row
+        $insert = mysqli_query($conn, "INSERT INTO ceo (ceoImage) VALUES ('$targetPath')");
+        if ($insert) {
+            move_uploaded_file($fileTmp, $targetPath);
+            $_SESSION['success_message'] = "CEO image uploaded successfully.";
+        } else {
+            $_SESSION['error_message'] = "Failed to insert CEO image: " . mysqli_error($conn);
         }
     }
 
@@ -392,6 +444,7 @@ if (isset($_POST['ceo_sectionOne_upload_btn'])) {
     echo "<meta http-equiv='refresh' content='0; URL=ceo'>";
     exit();
 }
+
 
 
 //About Section One Image Query

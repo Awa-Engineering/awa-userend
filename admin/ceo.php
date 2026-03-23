@@ -12,24 +12,26 @@
             <div class="flex-fill overflow-y-lg-auto scrollbar bg-body rounded-top-4 rounded-top-start-lg-4 rounded-top-end-lg-0 border-top border-lg shadow-2">
                 <main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
                     <?php
-                                    
-                        $select_query = "SELECT * FROM ceo ";
+                        // Initialize variable
+                        $ceoData = null;
+
+                        // Fetch the first CEO record
+                        $select_query = "SELECT * FROM ceo LIMIT 1";
                         $result = mysqli_query($conn, $select_query);
-                        if (mysqli_num_rows($result) > 0) {
-                            // output data of each row
-                            while($row = mysqli_fetch_assoc($result)) {
-                                $ceoID = $row['ceoID'];
-                                $quoteTitle = $row['quoteTitle'];
-                                $quote = $row['quote'];
-                                $title = $row['title'];
-                                $subTitle = $row['subTitle'];
-                                $text = $row['text'];
-                                $counter = $row['counter'];
-                            }
+
+                        if (!$result) {
+                            die("Database query failed: " . mysqli_error($conn));
                         }
 
-                    ?>
+                        if (mysqli_num_rows($result) > 0) {
+                            $ceoData = mysqli_fetch_assoc($result); // Single row as associative array
+                        }
 
+                        // Extract values safely, or default to empty strings
+                        $ceoID = $ceoData['id'] ?? '';
+                        $title = htmlspecialchars($ceoData['title'] ?? '');
+                        $text  = htmlspecialchars($ceoData['text'] ?? '');
+                    ?>
                     <div class="mb-6 mb-xl-10">
                         <div class="row g-3 align-items-center">
                             <div class="col">
@@ -50,7 +52,7 @@
                             </div>
                             <div class="col-md-8 col-xl-5">
                                 <div class="">
-                                    <input type="number" value="<?php echo $ceoID; ?>" name="ceoID" class="form-control">
+                                    <input type="hidden" name="ceoID" value="<?php echo $ceoID; ?>">
                                 </div>
                             </div>
                         </div>
@@ -72,58 +74,6 @@
                     <div class="mb-6 mb-xl-10">
                         <div class="row g-3 align-items-center">
                             <div class="col">
-                                <h3 class="ls-tight">Quote Section</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
-                        <div class="row align-items-center mb-10" style="display: none;">
-                            <div class="col-md-2">
-                                <label class="form-label">CEO ID</label>
-                            </div>
-                            <div class="col-md-8 col-xl-5">
-                                <div class="">
-                                    <input type="number" value="<?php echo $ceoID; ?>" name="ceoID" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Quote Title</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <input type="text" value="<?php echo $quoteTitle; ?>" name="quoteTitle" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Quote</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <textarea rows="5" name="quote" class="form-control"><?php echo $quote; ?></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row mb-6">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-8 text-end">
-                                <button type="submit" name="update_ceo_quote_btn" class="btn btn-danger text-white">Update Quote <i class="bi bi-arrow-right"></i></button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <hr />
-
-                    <div class="mb-6 mb-xl-10">
-                        <div class="row g-3 align-items-center">
-                            <div class="col">
                                 <h3 class="ls-tight">Section One</h3>
                             </div>
                         </div>
@@ -136,7 +86,7 @@
                             </div>
                             <div class="col-md-8 col-xl-5">
                                 <div class="">
-                                    <input type="number" value="<?php echo $ceoID; ?>" name="ceoID" class="form-control">
+                                    <input type="hidden" name="ceoID" value="<?php echo $ceoID; ?>">
                                 </div>
                             </div>
                         </div>
@@ -153,24 +103,14 @@
                         </div>
                     </form>
 
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
                         <div class="row align-items-center mb-10" style="display: none;">
                             <div class="col-md-2">
                                 <label class="form-label">CEO ID</label>
                             </div>
                             <div class="col-md-8 col-xl-5">
                                 <div class="">
-                                    <input type="number" value="<?php echo $ceoID; ?>" name="ceoID" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Sub-title</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <input type="text" value="<?php echo $subTitle; ?>" name="subTitle" class="form-control">
+                                    <input type="hidden" name="ceoID" value="<?php echo $ceoID; ?>">
                                 </div>
                             </div>
                         </div>
