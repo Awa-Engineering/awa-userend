@@ -72,7 +72,6 @@ include "./config/db.php";
         $supportID = isset($_GET['supportID']) ? $_GET['supportID'] : '';
 
         $supportID = $conn->real_escape_string($_POST['supportID']);
-        $status = $conn->real_escape_string($_POST['status']);
 
 
         $sql=mysqli_query($conn,"SELECT * FROM support where supportID='$supportID'");
