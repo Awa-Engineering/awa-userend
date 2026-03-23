@@ -54,7 +54,7 @@ if (isset($_POST['delete_support_btn'])) {
 // Delete Quote script
 if (isset($_GET['delete_id'])) {
 
-    $id = $_GET['delete_id'];
+    $quoteID = $_GET['id'] ?? '';
 
     if (empty($id)) {
         $_SESSION['error_message'] = "Invalid ID.";
