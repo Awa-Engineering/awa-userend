@@ -55,7 +55,7 @@ include "./components/navbar-alt.php";
                     else {
                         echo
                         "<div class='text-center mt-4'>
-                        <img src='./assets/img/no-data-icon.svg' width='120'>
+                        <img src='./assets/img/empty.png' width='220'>
                         <p class='lead mt-3'>No Certifications Yet!</p>
                         </div>";
                     }

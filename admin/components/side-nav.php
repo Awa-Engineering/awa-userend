@@ -70,9 +70,9 @@
                     </div>
                 </li>
 
-                <li class="nav-item my-1">
+                <!-- <li class="nav-item my-1">
                     <a class="nav-link d-flex align-items-center rounded-pill <?php if($page=='Jobs'){echo 'active';}?>" href="jobs"><i class="bi bi-person-workspace"></i> <span>Jobs</span> </a>
-                </li>
+                </li> -->
 
                 <li class="nav-item my-1">
                     <a class="nav-link d-flex align-items-center rounded-pill <?php if($page=='Certifications'){echo 'active';}?>" href="certifications"><i class="bi bi-bookmarks-fill"></i> <span>Certifications</span></a>

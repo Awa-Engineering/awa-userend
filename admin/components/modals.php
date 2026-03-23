@@ -235,6 +235,13 @@
                                 <input type="date" name="projectDate" required class="form-control">
                             </div>
                             <div class="col-sm-12">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" name="status" required aria-label="Status">
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12">
                                 <label class="form-label">Upload Hero Banner</label> 
                                 <input type="file" name="filePath" required class="form-control">
                             </div>
