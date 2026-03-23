@@ -49,7 +49,7 @@
                             <span><?php echo $designation; ?></span>
                             <div class="mt-4">
                                 <a href="edit-team?id=<?php echo $teamID; ?>" class='btn btn-secondary btn-sm'>Edit <i class="bi bi-pencil"></i></a>
-                                <button type="button" data-id="<? echo $teamID; ?>" onclick="confirmTeamDelete(this);" class='btn btn-danger btn-sm'>Delete <i class="bi bi-trash"></i></button>
+                                <button type="button" data-id="<?php echo $teamID; ?>" onclick="confirmTeamDelete(this);" class='btn btn-danger btn-sm'>Delete <i class="bi bi-trash"></i></button>
                             </div>
                         </div>
                     </div>

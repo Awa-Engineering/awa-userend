@@ -77,7 +77,7 @@
                                                                 <td class="text-end">
                                                                     <a href="view-team?id=<?php echo $teamID; ?>" class='btn btn-dark btn-sm'>View <i class="bi bi-eye"></i></a>
                                                                     <a href="edit-team?id=<?php echo $teamID; ?>" class='btn btn-secondary btn-sm'>Edit <i class="bi bi-pencil"></i></a>
-                                                                    <button type="button" data-id="<? echo $teamID; ?>" onclick="confirmTeamDelete(this);" class='btn btn-danger btn-sm'>Delete <i class="bi bi-trash"></i></button>
+                                                                    <button type="button" data-id="<?php echo $teamID; ?>" onclick="confirmTeamDelete(this);" class='btn btn-danger btn-sm'>Delete <i class="bi bi-trash"></i></button>
                                                                     <!-- <a href="edit-admin?id=<?php echo $adminID; ?>" class='btn btn-success btn-sm'><i class="bi bi-pen"></i></a> -->
                                                                 </td>
                                                             </tr>
