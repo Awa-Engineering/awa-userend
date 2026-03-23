@@ -119,7 +119,7 @@ include "./config/db.php";
             $_SESSION['error_message'] = "Quote not found";
         }
 
-        header("Location: view-quote?id=" . $quoteID);
+        echo "<meta http-equiv='refresh' content='0; URL=view-quote?id=$quoteID'>";
         exit();
     }
 
