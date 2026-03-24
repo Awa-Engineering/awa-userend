@@ -224,51 +224,60 @@ if (isset($_POST['new_project_category_btn'])) {
 //Add New Project Query
 if (isset($_POST['new_project_btn'])) {
 
-    $title = $conn->real_escape_string($_POST['title']);
-    $projectCategoryID = $conn->real_escape_string($_POST['projectCategoryID']);
-    $client = $conn->real_escape_string($_POST['client']);
-    $projectDate = $conn->real_escape_string($_POST['projectDate']);
+    $title = $_POST['title'];
+    $projectCategoryID = intval($_POST['projectCategoryID']);
+    $client = $_POST['client'];
+    $projectDate = $_POST['projectDate'];
+    $status = $_POST['status']; // <-- Added
+
+    $fileTmp  = $_FILES['filePath']['tmp_name'];
     $fileName = $_FILES['filePath']['name'];
-    $fileTmp = $_FILES['filePath']['tmp_name'];
-    $fileType = $_FILES['filePath']['type'];
-    
-    $uploadDir = 'upload/';
-    $targetPath = $uploadDir . $conn->real_escape_string($fileName);
 
-    // If file exists, rename to avoid overwrite
-    if (file_exists($targetPath)) {
-        $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
-        $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
-    }
+    $fileType = mime_content_type($fileTmp);
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-    // Only accept image files
-    if (!preg_match("!image!", $fileType)) {
-        $_SESSION['error_message'] = "Only image uploads are allowed.";
+    if (!in_array($fileType, $allowedTypes)) {
+        $_SESSION['error_message'] = "Only JPG, PNG, GIF, or WEBP images are allowed.";
         echo "<meta http-equiv='refresh' content='0; URL=projects'>";
         exit();
     }
 
-    // Check if entry already exists table
-    $sql = mysqli_query($conn, "SELECT * FROM projects WHERE title = '$title'");
-    $result = mysqli_fetch_array($sql);
+    $uploadDir = 'upload/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
-    if ($result) {
+    $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+    $newFileName = uniqid('project_', true) . '.' . $extension;
+    $targetPath = $uploadDir . $newFileName;
 
-        $_SESSION['error_message'] = "Project already exist";
-
-    } else {
-        // INSERT new project record
-        $insert = mysqli_query($conn, "INSERT INTO projects (title, projectCategoryID, client, projectDate, filePath) VALUES ('$title', '$projectCategoryID', '$client', '$projectDate', '$targetPath')");
-
-        if ($insert) {
-            copy($fileTmp, $targetPath);
-            $_SESSION['success_message'] = "New project added successfully.";
-        } else {
-            $_SESSION['error_message'] = "Failed to add project" . mysqli_error($conn);
-        }
+    if (!move_uploaded_file($fileTmp, $targetPath)) {
+        $_SESSION['error_message'] = "File upload failed.";
+        echo "<meta http-equiv='refresh' content='0; URL=projects'>";
+        exit();
     }
 
-    // Redirect back
+    $stmt = $conn->prepare("SELECT projectID FROM projects WHERE title = ?");
+    $stmt->bind_param("s", $title);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if ($result) {
+        $_SESSION['error_message'] = "Project already exists.";
+        echo "<meta http-equiv='refresh' content='0; URL=projects'>";
+        exit();
+    }
+
+    // INSERT including status
+    $stmt = $conn->prepare("INSERT INTO projects (title, projectCategoryID, client, projectDate, filePath, status) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sissss", $title, $projectCategoryID, $client, $projectDate, $targetPath, $status);
+
+    if ($stmt->execute()) {
+        $_SESSION['success_message'] = "New project added successfully.";
+    } else {
+        $_SESSION['error_message'] = "Failed to add project: " . $stmt->error;
+    }
+
+    $stmt->close();
     echo "<meta http-equiv='refresh' content='0; URL=projects'>";
     exit();
 }

@@ -19,6 +19,7 @@ $select_query = "
         p.projectCategoryID,
         p.location,
         p.description,
+        p.status,
         c.categoryID,
         c.title AS categoryTitle
     FROM projects p
@@ -49,6 +50,7 @@ $projectCategoryID = $project['projectCategoryID'];
 $categoryTitle = $project['categoryTitle'];
 $location = $project['location'];
 $description = $project['description'];
+$status = $project['status'];
 
 //Fetch project media separately
 $project_media_images = [];

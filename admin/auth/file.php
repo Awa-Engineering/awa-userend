@@ -1375,46 +1375,55 @@ if (isset($_POST['member_upload_btn'])) {
 if (isset($_POST['project_hero_upload_btn'])) {
 
     $projectID = $conn->real_escape_string($_POST['projectID']);
-    $fileName = $_FILES['filePath']['name'];
-    $fileTmp = $_FILES['filePath']['tmp_name'];
-    $fileType = $_FILES['filePath']['type'];
-    
+    $fileName  = $_FILES['filePath']['name'];
+    $fileTmp   = $_FILES['filePath']['tmp_name'];
+    $fileType  = $_FILES['filePath']['type'];
+
     $uploadDir = 'upload/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+    // Build target path
     $targetPath = $uploadDir . $conn->real_escape_string($fileName);
 
-    // If file exists, rename to avoid overwrite
+    // Rename file if it already exists
     if (file_exists($targetPath)) {
         $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
         $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
     }
 
-    // Only accept image files
+    // Only allow images
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
         echo "<meta http-equiv='refresh' content='0; URL=edit-project?id=$projectID'>";
         exit();
     }
 
-    // Check if entry already exists for this project in `hero` table
-    $sql = mysqli_query($conn, "SELECT * FROM projects WHERE projectID = '$projectID'");
-    $result = mysqli_fetch_array($sql);
+    // Check if project exists
+    $sql = mysqli_query($conn, "SELECT filePath FROM projects WHERE projectID = '$projectID'");
+    $result = mysqli_fetch_assoc($sql);
 
     if ($result) {
-        // UPDATE existing hero record
+        // Delete old hero image if it exists
+        if (!empty($result['filePath']) && file_exists($result['filePath'])) {
+            unlink($result['filePath']);
+        }
+
+        // Update existing project with new hero image
         $update = mysqli_query($conn, "UPDATE projects SET filePath = '$targetPath' WHERE projectID = '$projectID'");
 
         if ($update) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Hero image updated successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to update hero image: " . mysqli_error($conn);
         }
+
     } else {
-        // INSERT new hero record
+        // Insert new project record with hero image
         $insert = mysqli_query($conn, "INSERT INTO projects (projectID, filePath) VALUES ('$projectID', '$targetPath')");
 
         if ($insert) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Hero image uploaded successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to insert hero image: " . mysqli_error($conn);
@@ -1426,83 +1435,61 @@ if (isset($_POST['project_hero_upload_btn'])) {
     exit();
 }
 
-
 //Project Gallery Query
 if (isset($_POST['project-gallery_upload_btn'])) {
 
     $projectID = $conn->real_escape_string($_POST['projectID']);
     $uploadDir = 'upload/';
     $files = $_FILES['filePath'];
-    $uploadCount = count($files['name']);
+
     $uploadErrors = [];
     $uploadSuccess = [];
 
-    // Ensure upload directory exists
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0755, true);
     }
 
-    for ($i = 0; $i < $uploadCount; $i++) {
+    for ($i = 0; $i < count($files['name']); $i++) {
+
         $fileName = $files['name'][$i];
-        $fileTmp = $files['tmp_name'][$i];
-        $fileType = $files['type'][$i];
+        $fileTmp  = $files['tmp_name'][$i];
 
-        // Only accept image files
+        // Validate image
         if (!getimagesize($fileTmp)) {
-            $uploadErrors[] = "$fileName is not a valid image file.";
+            $uploadErrors[] = "$fileName is not a valid image.";
             continue;
         }
 
-        // Sanitize file name and handle duplicates
-        $safeFileName = $conn->real_escape_string($fileName);
-        $targetPath = $uploadDir . $safeFileName;
+        // Generate safe unique filename
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $newFileName = uniqid() . '_' . rand(1000, 9999) . '.' . $extension;
+        $targetPath = $uploadDir . $newFileName;
 
-        if (file_exists($targetPath)) {
-            $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $safeFileName;
-            $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
-        }
-
-        // Move uploaded file
+        // Move file first
         if (!move_uploaded_file($fileTmp, $targetPath)) {
-            $uploadErrors[] = "Failed to move $fileName.";
+            $uploadErrors[] = "Failed to upload $fileName.";
             continue;
         }
 
-        // Check if a project_media record already exists for this projectID and original file name
-        $checkQuery = mysqli_query($conn, "SELECT projectMediaID FROM project_media WHERE projectID = '$projectID' AND filePath LIKE '%$safeFileName%'");
+        // Always INSERT (gallery should allow multiple images)
+        $insert = mysqli_query($conn, "INSERT INTO project_media (projectID, filePath) VALUES ('$projectID', '$targetPath')");
 
-        if (mysqli_num_rows($checkQuery) > 0) {
-            // Update existing record
-            $existing = mysqli_fetch_assoc($checkQuery);
-            $projectMediaID = $existing['projectMediaID'];
-
-            $update = mysqli_query($conn, "UPDATE project_media SET filePath = '$targetPath' WHERE mediaID = '$mediaID'");
-            if ($update) {
-                $uploadSuccess[] = "$fileName updated successfully.";
-            } else {
-                $uploadErrors[] = "Failed to update $fileName: " . mysqli_error($conn);
-            }
+        if ($insert) {
+            $uploadSuccess[] = "$fileName uploaded successfully.";
         } else {
-            // Insert new record
-            $insert = mysqli_query($conn, "INSERT INTO project_media (projectID, filePath) VALUES ('$projectID', '$targetPath')");
-            if ($insert) {
-                $uploadSuccess[] = "$fileName uploaded successfully.";
-            } else {
-                $uploadErrors[] = "Failed to insert record for $fileName: " . mysqli_error($conn);
-            }
+            $uploadErrors[] = "DB error for $fileName: " . mysqli_error($conn);
         }
     }
 
-    // Set session messages
+    // Messages
     if (!empty($uploadSuccess)) {
-        $_SESSION['success_message'] = implode($uploadSuccess);
+        $_SESSION['success_message'] = implode(", ", $uploadSuccess);
     }
 
     if (!empty($uploadErrors)) {
-        $_SESSION['error_message'] = implode($uploadErrors);
+        $_SESSION['error_message'] = implode(", ", $uploadErrors);
     }
 
-    // Redirect back
     echo "<meta http-equiv='refresh' content='0; URL=edit-project?id=$projectID'>";
     exit();
 }
