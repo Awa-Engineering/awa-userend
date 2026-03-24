@@ -254,13 +254,11 @@
     //Update About Section One Query
     if (isset($_POST['update_about_sectionOne_btn'])) {
 
-        $aboutID = isset($_GET['aboutID']) ? $_GET['aboutID'] : '';
-
-        $aboutID = $conn->real_escape_string($_POST['aboutID']);
-        $sectionOneTitle = $conn->real_escape_string($_POST['sectionOneTitle']);
-        $sectionOneSubTitle = $conn->real_escape_string($_POST['sectionOneSubTitle']);
-        $sectionOneText = $conn->real_escape_string($_POST['sectionOneText']);
-        $sectionTwoText = $conn->real_escape_string($_POST['sectionTwoText']);
+        $aboutID = $_POST['aboutID'] ?? '';
+        $sectionOneTitle = $_POST['sectionOneTitle'] ?? '';
+        $sectionOneSubTitle = $_POST['sectionOneSubTitle'] ?? '';
+        $sectionOneText = $_POST['sectionOneText'] ?? '';
+        $sectionTwoText = $_POST['sectionTwoText'] ?? '';
 
 
         $sql=mysqli_query($conn,"SELECT * FROM about where aboutID='$aboutID'");
