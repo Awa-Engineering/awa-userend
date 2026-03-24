@@ -13,37 +13,37 @@
                 <main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
                     <?php
                                     
-                        $select_query = "SELECT * FROM about ";
+                        $select_query = "SELECT * FROM about LIMIT 1";
                         $result = mysqli_query($conn, $select_query);
                         if (mysqli_num_rows($result) > 0) {
                             // output data of each row
                             while($row = mysqli_fetch_assoc($result)) {
-                                $aboutID = $row['aboutID'];
-                                $quoteTitle = $row['quoteTitle'];
-                                $quote = $row['quote'];
-                                $sectionOneTitle = $row['sectionOneTitle'];
-                                $sectionOneSubTitle = $row['sectionOneSubTitle'];
-                                $sectionOneText = $row['sectionOneText'];
-                                $sectionTwoTitle = $row['sectionTwoTitle'];
-                                $sectionTwoText = $row['sectionTwoText'];
-                                $sectionThreeText = $row['sectionThreeText'];
-                                $sectionThreeSubTextOne = $row['sectionThreeSubTextOne'];
-                                $sectionThreeSubTextTwo = $row['sectionThreeSubTextTwo'];
-                                $sectionThreeSubTextThree = $row['sectionThreeSubTextThree'];
-                                $sectionFourSubTitle = $row['sectionFourSubTitle'];
-                                $sectionFourText = $row['sectionFourText'];
-                                $extraOneTitle = $row['extraOneTitle'];
-                                $extraOneText = $row['extraOneText'];
-                                $extraTwoTitle = $row['extraTwoTitle'];
-                                $extraTwoText = $row['extraTwoText'];
-                                $extraThreeTitle = $row['extraThreeTitle'];
-                                $extraThreeText = $row['extraThreeText'];
-                                $extraFourTitle = $row['extraFourTitle'];
-                                $extraFourText = $row['extraFourText'];
-                                $extraFiveTitle = $row['extraFiveTitle'];
-                                $extraFiveText = $row['extraFiveText'];
-                                $extraSixTitle = $row['extraSixTitle'];
-                                $extraSixText = $row['extraSixText'];
+                                $aboutID = $row['aboutID'] ?? '';
+                                $quoteTitle = $row['quoteTitle'] ?? '';
+                                $quote = $row['quote'] ?? '';
+                                $sectionOneTitle = $row['sectionOneTitle'] ?? '';
+                                $sectionOneSubTitle = $row['sectionOneSubTitle'] ?? '';
+                                $sectionOneText = $row['sectionOneText'] ?? '';
+                                $sectionTwoTitle = $row['sectionTwoTitle'] ?? '';
+                                $sectionTwoText = $row['sectionTwoText'] ?? '';
+                                $sectionThreeText = $row['sectionThreeText'] ?? '';
+                                $sectionThreeSubTextOne = $row['sectionThreeSubTextOne'] ?? '';
+                                $sectionThreeSubTextTwo = $row['sectionThreeSubTextTwo'] ?? '';
+                                $sectionThreeSubTextThree = $row['sectionThreeSubTextThree'] ?? '';
+                                $sectionFourSubTitle = $row['sectionFourSubTitle'] ?? '';
+                                $sectionFourText = $row['sectionFourText'] ?? '';
+                                $extraOneTitle = $row['extraOneTitle'] ?? '';
+                                $extraOneText = $row['extraOneText'] ?? '';
+                                $extraTwoTitle = $row['extraTwoTitle'] ?? '';
+                                $extraTwoText = $row['extraTwoText'] ?? '';
+                                $extraThreeTitle = $row['extraThreeTitle'] ?? '';
+                                $extraThreeText = $row['extraThreeText'] ?? '';
+                                $extraFourTitle = $row['extraFourTitle'] ?? '';
+                                $extraFourText = $row['extraFourText'] ?? '';
+                                $extraFiveTitle = $row['extraFiveTitle'] ?? '';
+                                $extraFiveText = $row['extraFiveText'] ?? '';
+                                $extraSixTitle = $row['extraSixTitle'] ?? '';
+                                $extraSixText = $row['extraSixText'] ?? '';
                             }
                         }
 
