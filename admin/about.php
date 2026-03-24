@@ -32,6 +32,18 @@
                                 $sectionThreeSubTextThree = $row['sectionThreeSubTextThree'];
                                 $sectionFourSubTitle = $row['sectionFourSubTitle'];
                                 $sectionFourText = $row['sectionFourText'];
+                                $extraOneTitle = $row['extraOneTitle'];
+                                $extraOneText = $row['extraOneText'];
+                                $extraTwoTitle = $row['extraTwoTitle'];
+                                $extraTwoText = $row['extraTwoText'];
+                                $extraThreeTitle = $row['extraThreeTitle'];
+                                $extraThreeText = $row['extraThreeText'];
+                                $extraFourTitle = $row['extraFourTitle'];
+                                $extraFourText = $row['extraFourText'];
+                                $extraFiveTitle = $row['extraFiveTitle'];
+                                $extraFiveText = $row['extraFiveText'];
+                                $extraSixTitle = $row['extraSixTitle'];
+                                $extraSixText = $row['extraSixText'];
                             }
                         }
 
@@ -40,7 +52,7 @@
                     <div class="mb-6 mb-xl-10">
                         <div class="row g-3 align-items-center">
                             <div class="col">
-                                <h3 class="ls-tight">About Giolee</h3>
+                                <h3 class="ls-tight">About Awa</h3>
                             </div>
                             <!-- <div class="col">
                                 <div class="hstack gap-2 justify-content-end">
@@ -126,6 +138,56 @@
                         </div>
                     </form>
 
+                    <!-- Quote left image -->
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
+                        <div class="row align-items-center mb-10" style="display: none;">
+                            <div class="col-md-2">
+                                <label class="form-label">About ID</label>
+                            </div>
+                            <div class="col-md-8 col-xl-5">
+                                <div class="">
+                                    <input type="number" value="<?php echo $aboutID; ?>" name="aboutID" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Quote Image(left)</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="input-group">
+                                    <input type="file" name="sectionOneImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+                                    <button class="btn btn-dark" type="submit" name="about_sectionOne_upload_btn" id="inputGroupFileAddon04">Upload Image</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Quote right image -->
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
+                        <div class="row align-items-center mb-10" style="display: none;">
+                            <div class="col-md-2">
+                                <label class="form-label">About ID</label>
+                            </div>
+                            <div class="col-md-8 col-xl-5">
+                                <div class="">
+                                    <input type="number" value="<?php echo $aboutID; ?>" name="aboutID" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Quote Image(right)</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="input-group">
+                                    <input type="file" name="sectionTwoImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+                                    <button class="btn btn-dark" type="submit" name="about_sectionTwo_upload_btn" id="inputGroupFileAddon04">Upload Image</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
                     <hr />
 
                     <div class="mb-6 mb-xl-10">
@@ -147,40 +209,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Section One Image(Portrait)</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="input-group">
-                                    <input type="file" name="sectionOneImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
-                                    <button class="btn btn-dark" type="submit" name="about_sectionOne_upload_btn" id="inputGroupFileAddon04">Upload Image</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
-                        <div class="row align-items-center mb-10" style="display: none;">
-                            <div class="col-md-2">
-                                <label class="form-label">About ID</label>
-                            </div>
-                            <div class="col-md-8 col-xl-5">
-                                <div class="">
-                                    <input type="number" value="<?php echo $aboutID; ?>" name="aboutID" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Sub-title</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <input type="text" value="<?php echo $sectionOneSubTitle; ?>" name="sectionOneSubTitle" class="form-control">
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2">
@@ -195,11 +223,22 @@
 
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2">
-                                <label class="form-label">Text</label>
+                                <label class="form-label">Text Left</label>
                             </div>
                             <div class="col-md-8 col-xl-8">
                                 <div class="">
                                     <textarea rows="5" name="sectionOneText" id="aboutSection1" class="form-control"><?php echo $sectionOneText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Text Right</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="sectionTwoText" id="aboutSection2" class="form-control"><?php echo $sectionTwoText; ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -223,31 +262,9 @@
                         </div>
                     </div>
 
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
-                        <div class="row align-items-center mb-10" style="display: none;">
-                            <div class="col-md-2">
-                                <label class="form-label">About ID</label>
-                            </div>
-                            <div class="col-md-8 col-xl-5">
-                                <div class="">
-                                    <input type="number" value="<?php echo $aboutID; ?>" name="aboutID" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Section Two Image</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="input-group">
-                                    <input type="file" name="sectionTwoImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
-                                    <button class="btn btn-dark" type="submit" name="about_sectionTwo_upload_btn" id="inputGroupFileAddon04">Upload Image</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    
 
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
+                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
                         <div class="row align-items-center mb-10" style="display: none;">
                             <div class="col-md-2">
                                 <label class="form-label">About ID</label>
@@ -258,6 +275,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2">
                                 <label class="form-label">Title</label>
@@ -271,14 +289,147 @@
 
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2">
-                                <label class="form-label">Text</label>
+                                <label class="form-label">Sub-title</label>
                             </div>
                             <div class="col-md-8 col-xl-8">
                                 <div class="">
-                                    <textarea rows="5" name="sectionTwoText" id="aboutSection2" class="form-control"><?php echo $sectionTwoText; ?></textarea>
+                                    <input type="text" value="<?php echo $sectionFourSubTitle; ?>" name="sectionFourSubTitle" class="form-control">
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">First Feature Title</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <input type="text" value="<?php echo $extraOneTitle; ?>" name="extraOneTitle" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">First Feature Text</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="extraOneText" id="extraOneText" class="form-control"><?php echo $extraOneText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Second Feature Title</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <input type="text" value="<?php echo $extraTwoTitle; ?>" name="extraTwoTitle" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Second Feature Text</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="extraTwoText" id="extraTwoText" class="form-control"><?php echo $extraTwoText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Third Feature Title</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <input type="text" value="<?php echo $extraThreeTitle; ?>" name="extraThreeTitle" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Third Feature Text</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="extraThreeText" id="extraThreeText" class="form-control"><?php echo $extraThreeText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Fourth Feature Title</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <input type="text" value="<?php echo $extraFourTitle; ?>" name="extraFourTitle" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Fourth Feature Text</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="extraFourText" id="extraFourText" class="form-control"><?php echo $extraFourText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Fifth Feature Title</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <input type="text" value="<?php echo $extraFiveTitle; ?>" name="extraFiveTitle" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Fifth Feature Text</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="extraFiveText" id="extraFiveText" class="form-control"><?php echo $extraFiveText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Sixth Feature Title</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <input type="text" value="<?php echo $extraSixTitle; ?>" name="extraSixTitle" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Sixth Feature Text</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="extraSixText" id="extraSixText" class="form-control"><?php echo $extraSixText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         
                         <div class="row mb-6">
                             <div class="col-md-2">
@@ -288,7 +439,6 @@
                             </div>
                         </div>
                     </form>
-
 
                     <hr />
 
@@ -313,106 +463,7 @@
                         </div>
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2">
-                                <label class="form-label">Section Three Image(Landscape)</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="input-group">
-                                    <input type="file" name="sectionThreeImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
-                                    <button class="btn btn-dark" type="submit" name="about_sectionThree_upload_btn" id="inputGroupFileAddon04">Upload Image</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
-                        <div class="row align-items-center mb-10" style="display: none;">
-                            <div class="col-md-2">
-                                <label class="form-label">About ID</label>
-                            </div>
-                            <div class="col-md-8 col-xl-5">
-                                <div class="">
-                                    <input type="number" value="<?php echo $aboutID; ?>" name="aboutID" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Vision & Mission</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <textarea rows="5" name="sectionThreeText" id="sectionThreeText" class="form-control"><?php echo $sectionThreeText; ?></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Capacity</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <textarea rows="5" name="sectionThreeSubTextOne" id="sectionThreeSubTextOne" class="form-control"><?php echo $sectionThreeSubTextOne; ?></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Projects</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <textarea rows="5" name="sectionThreeSubTextTwo" id="sectionThreeSubTextTwo" class="form-control"><?php echo $sectionThreeSubTextTwo; ?></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Specialists</label>
-                            </div>
-                            <div class="col-md-8 col-xl-8">
-                                <div class="">
-                                    <textarea rows="5" name="sectionThreeSubTextThree" id="sectionThreeSubTextThree" class="form-control"><?php echo $sectionThreeSubTextThree; ?></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row mb-6">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-8 text-end">
-                                <button type="submit" name="update_about_sectionThree_btn" class="btn btn-danger text-white">Update Section Three <i class="bi bi-arrow-right"></i></button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <hr />
-
-                    <div class="mb-6 mb-xl-10">
-                        <div class="row g-3 align-items-center">
-                            <div class="col">
-                                <h3 class="ls-tight">Section Four</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST" enctype="multipart/form-data">
-                        <div class="row align-items-center mb-10" style="display: none;">
-                            <div class="col-md-2">
-                                <label class="form-label">About ID</label>
-                            </div>
-                            <div class="col-md-8 col-xl-5">
-                                <div class="">
-                                    <input type="number" value="<?php echo $aboutID; ?>" name="aboutID" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-center mb-10">
-                            <div class="col-md-2">
-                                <label class="form-label">Section Four Image</label>
+                                <label class="form-label">Section Three Image</label>
                             </div>
                             <div class="col-md-8 col-xl-8">
                                 <div class="input-group">
@@ -434,24 +485,47 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2">
-                                <label class="form-label">Sub-title</label>
+                                <label class="form-label">Our Mission Title</label>
                             </div>
                             <div class="col-md-8 col-xl-8">
                                 <div class="">
-                                    <input type="text" value="<?php echo $sectionFourSubTitle; ?>" name="sectionFourSubTitle" class="form-control">
+                                    <input type="text" value="<?php echo $sectionThreeSubTextTwo; ?>" name="sectionThreeSubTextTwo" class="form-control">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row align-items-center mb-10">
                             <div class="col-md-2">
-                                <label class="form-label">Text</label>
+                                <label class="form-label">Our Mission Text</label>
                             </div>
                             <div class="col-md-8 col-xl-8">
                                 <div class="">
-                                    <textarea rows="5" name="sectionFourText" id="sectionFourText" class="form-control"><?php echo $sectionFourText; ?></textarea>
+                                    <textarea rows="5" name="sectionThreeText" class="form-control"><?php echo $sectionThreeText; ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Our Vision Title</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <input type="text" value="<?php echo $sectionThreeSubTextOne; ?>" name="sectionThreeSubTextOne" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mb-10">
+                            <div class="col-md-2">
+                                <label class="form-label">Our Vision Text</label>
+                            </div>
+                            <div class="col-md-8 col-xl-8">
+                                <div class="">
+                                    <textarea rows="5" name="sectionFourText" class="form-control"><?php echo $sectionFourText; ?></textarea>
                                 </div>
                             </div>
                         </div>

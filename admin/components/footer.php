@@ -112,6 +112,36 @@
             .catch( error => {
                 console.error( error );
             } );
+        ClassicEditor
+            .create( document.querySelector( '#extraOneText' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+        ClassicEditor
+            .create( document.querySelector( '#extraTwoText' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+        ClassicEditor
+            .create( document.querySelector( '#extraThreeText' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+            ClassicEditor
+            .create( document.querySelector( '#extraFourText' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+            ClassicEditor
+            .create( document.querySelector( '#extraFiveText' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+        ClassicEditor
+            .create( document.querySelector( '#extraSixText' ) )
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
     
 

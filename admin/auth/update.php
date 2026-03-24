@@ -1,6 +1,7 @@
 <?php
-// Connect database
-include "./config/db.php";
+
+    // Connect database
+    include "./config/db.php";
     
 
     //Update Admin Query
@@ -259,12 +260,13 @@ include "./config/db.php";
         $sectionOneTitle = $conn->real_escape_string($_POST['sectionOneTitle']);
         $sectionOneSubTitle = $conn->real_escape_string($_POST['sectionOneSubTitle']);
         $sectionOneText = $conn->real_escape_string($_POST['sectionOneText']);
+        $sectionTwoText = $conn->real_escape_string($_POST['sectionTwoText']);
 
 
         $sql=mysqli_query($conn,"SELECT * FROM about where aboutID='$aboutID'");
         $result=mysqli_fetch_array($sql);
         if($result>0){
-            $conn=mysqli_query($conn,"UPDATE about SET sectionOneTitle='$sectionOneTitle', sectionOneSubTitle='$sectionOneSubTitle', sectionOneText='$sectionOneText' WHERE aboutID='$aboutID'");
+            $conn=mysqli_query($conn,"UPDATE about SET sectionOneTitle='$sectionOneTitle', sectionOneSubTitle='$sectionOneSubTitle', sectionOneText='$sectionOneText', sectionTwoText='$sectionTwoText' WHERE aboutID='$aboutID'");
 
             $_SESSION['success_message'] = "Section One Updated";
             echo "<meta http-equiv='refresh' content='0; URL=about'>";
@@ -284,19 +286,47 @@ include "./config/db.php";
     //Update About Section Two Query
     if (isset($_POST['update_about_sectionTwo_btn'])) {
 
-        $aboutID = isset($_GET['aboutID']) ? $_GET['aboutID'] : '';
-
         $aboutID = $conn->real_escape_string($_POST['aboutID']);
         $sectionTwoTitle = $conn->real_escape_string($_POST['sectionTwoTitle']);
-        $sectionTwoText = $conn->real_escape_string($_POST['sectionTwoText']);
+        $sectionFourSubTitle  = $conn->real_escape_string($_POST['sectionFourSubTitle']);
+        $extraOneTitle = $conn->real_escape_string($_POST['extraOneTitle']);
+        $extraOneText = $conn->real_escape_string($_POST['extraOneText']);
+        $extraTwoTitle = $conn->real_escape_string($_POST['extraTwoTitle']);
+        $extraTwoText = $conn->real_escape_string($_POST['extraTwoText']);
+        $extraThreeTitle = $conn->real_escape_string($_POST['extraThreeTitle']);
+        $extraThreeText = $conn->real_escape_string($_POST['extraThreeText']);
+        $extraFourTitle = $conn->real_escape_string($_POST['extraFourTitle']);
+        $extraFourText = $conn->real_escape_string($_POST['extraFourText']);
+        $extraFiveTitle = $conn->real_escape_string($_POST['extraFiveTitle']);
+        $extraFiveText = $conn->real_escape_string($_POST['extraFiveText']);
+        $extraSixTitle = $conn->real_escape_string($_POST['extraSixTitle']);
+        $extraSixText = $conn->real_escape_string($_POST['extraSixText']);
 
 
         $sql=mysqli_query($conn,"SELECT * FROM about where aboutID='$aboutID'");
         $result=mysqli_fetch_array($sql);
-        if($result>0){
-            $conn=mysqli_query($conn,"UPDATE about SET sectionTwoTitle='$sectionTwoTitle', sectionTwoText='$sectionTwoText' WHERE aboutID='$aboutID'");
+        if($result){
+            $update = mysqli_query($conn, "UPDATE about SET 
+            sectionTwoTitle='$sectionTwoTitle', 
+            sectionFourSubTitle='$sectionFourSubTitle', 
+            extraOneTitle='$extraOneTitle', 
+            extraOneText='$extraOneText', 
+            extraTwoTitle='$extraTwoTitle', 
+            extraTwoText='$extraTwoText', 
+            extraThreeTitle='$extraThreeTitle', 
+            extraThreeText='$extraThreeText', 
+            extraFourTitle='$extraFourTitle', 
+            extraFourText='$extraFourText', 
+            extraFiveTitle='$extraFiveTitle', 
+            extraFiveText='$extraFiveText', 
+            extraSixTitle='$extraSixTitle', 
+            extraSixText='$extraSixText' WHERE aboutID='$aboutID'");
 
-            $_SESSION['success_message'] = "Section Two Updated";
+            if ($update) {
+                $_SESSION['success_message'] = "Section Two Updated";
+            } else {
+                $_SESSION['error_message'] = "Update failed: " . mysqli_error($conn);
+            }
             echo "<meta http-equiv='refresh' content='0; URL=about'>";
             exit();
 
@@ -346,17 +376,17 @@ include "./config/db.php";
     //Update About Section Four Query
     if (isset($_POST['update_about_sectionFour_btn'])) {
 
-        $aboutID = isset($_GET['aboutID']) ? $_GET['aboutID'] : '';
-
         $aboutID = $conn->real_escape_string($_POST['aboutID']);
-        $sectionFourSubTitle = $conn->real_escape_string($_POST['sectionFourSubTitle']);
+        $sectionThreeSubTextTwo = $conn->real_escape_string($_POST['sectionThreeSubTextTwo']);
+        $sectionThreeText = $conn->real_escape_string($_POST['sectionThreeText']);
+        $sectionThreeSubTextOne = $conn->real_escape_string($_POST['sectionThreeSubTextOne']);
         $sectionFourText = $conn->real_escape_string($_POST['sectionFourText']);
 
 
         $sql=mysqli_query($conn,"SELECT * FROM about where aboutID='$aboutID'");
         $result=mysqli_fetch_array($sql);
         if($result>0){
-            $conn=mysqli_query($conn,"UPDATE about SET sectionFourSubTitle='$sectionFourSubTitle', sectionFourText='$sectionFourText' WHERE aboutID='$aboutID'");
+            $conn=mysqli_query($conn,"UPDATE about SET sectionThreeSubTextTwo='$sectionThreeSubTextTwo', sectionThreeText='$sectionThreeText', sectionThreeSubTextOne='$sectionThreeSubTextOne', sectionFourText='$sectionFourText' WHERE aboutID='$aboutID'");
 
             $_SESSION['success_message'] = "Section Four Updated";
             echo "<meta http-equiv='refresh' content='0; URL=about'>";

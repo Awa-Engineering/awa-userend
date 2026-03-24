@@ -19,6 +19,7 @@ require_once "./config/db.php";
             $sectionOneSubTitle = $row['sectionOneSubTitle'];
             $sectionOneTitle = $row['sectionOneTitle'];
             $sectionOneText = $row['sectionOneText'];
+            $sectionOneImage = $row['sectionOneImage'];
             $sectionTwoImage = $row['sectionTwoImage'];
             $sectionTwoTitle = $row['sectionTwoTitle'];
             $sectionTwoText = $row['sectionTwoText'];
@@ -30,5 +31,17 @@ require_once "./config/db.php";
             $sectionFourSubTitle = $row['sectionFourSubTitle'];
             $sectionFourText = $row['sectionFourText'];
             $sectionFourImage = $row['sectionFourImage'];
+            $extraOneTitle = $row['extraOneTitle'];
+            $extraOneText = $row['extraOneText'];
+            $extraTwoTitle = $row['extraTwoTitle'];
+            $extraTwoText = $row['extraTwoText'];
+            $extraThreeTitle = $row['extraThreeTitle'];
+            $extraThreeText = $row['extraThreeText'];
+            $extraFourTitle = $row['extraFourTitle'];
+            $extraFourText = $row['extraFourText'];
+            $extraFiveTitle = $row['extraFiveTitle'];
+            $extraFiveText = $row['extraFiveText'];
+            $extraSixTitle = $row['extraSixTitle'];
+            $extraSixText = $row['extraSixText'];
         }
     }
