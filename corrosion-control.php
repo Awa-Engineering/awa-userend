@@ -1,18 +1,20 @@
 <?php
 include "./components/header.php";
 include "./components/navbar-alt.php";
+include_once "./auth/data-cor.php";
 ?>
 
-    <div class="breadcumb-wrapper" data-bg-src="assets/img/corrosion-control.jpg">
+    <div class="breadcumb-wrapper" data-bg-src="./admin/<?php echo $breadcrumb_filePath; ?>">
         <div class="breadcumb-overlay"></div>
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h1 class="breadcumb-title">Corrosion Control</h1>
+                        <h1 class="breadcumb-title"><?php echo $title; ?></h1>
                         <ul class="breadcumb-menu">
                             <li><a href="./">Home</a></li>
-                            <li>Corrosion Control</li>
+                            <li><a href="services">Services</a></li>
+                            <li><?php echo $title; ?></li>
                         </ul>
                     </div>
                 </div>
@@ -26,27 +28,25 @@ include "./components/navbar-alt.php";
                 <div class="col-xxl-8 col-lg-7">
                     <div class="page-single mb-40">
                         <div class="page-img mb-25">
-                            <img src="./assets/img/corrosion-control.jpg" alt="Service Image">
+                            <img src="./admin/<?php echo $hero_filePath; ?>" alt="Image">
                         </div>
                         <div class="page-content">
-                            <h2 class="page-title fw-semibold">Corrosion Control</h2>
-                            <p class="mb-30">Corrosion can be defined as the degradation of a material due to reaction with its environment. It is a spontaneous process. The driving force of corrosion is the tendency of the metals to have lower energy. Corrosion control is a concern whenever water is present in a metalworking fluid. Heat removal is one of the most important functions of a metalworking fluid. Water-based coolants have greater capacity for removing heat than oil. However, water alone in contact with freshly machined metal leads to corrosion.</p>
-
-                            <h3>Why Corrosion Control?</h3>
-                            <div class="row gy-3 mb-50">
-                                <div class="col-xl-12">
-                                    <div class="checklist style5">
-                                        <ul>
-                                            <li><strong>Economic:</strong> It can be referred to as cost of corrosion under Direct Loss and Indirect Loss.</li>
-                                            <li><strong>Health:</strong> Surgical instruments, implants, pacemakers, etc. are all prone to corrosion.</li>
-                                            <li><strong>Cultural:</strong> Antiques and Monuments may get extinct due to corrosion.</li>
-                                            <li><strong>Safety:</strong> Machine parts in factories and home appliances can cause harm if corroded.</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <h2 class="page-title fw-semibold"><?php echo $title; ?></h2>
+                            <div class="mb-30">
+                                <?php echo $firstParagraph; ?>
                             </div>
 
-                            <h4 class="fw-semibold mb-10">Provide service</h4>
+                            <div class="row gy-40 align-items-center">
+                                <?php foreach ($media_images as $imagePath): ?>
+                                <div class="col-xl-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $imagePath; ?>" alt="Service Image">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <h4 class="fw-semibold mb-10 mt-30">Provide service</h4>
                             <div class="row gy-40">
                                 <div class="col-sm-6 col-xl-6">
                                     <div class="process-card3 py-5 text-start">
@@ -75,6 +75,76 @@ include "./components/navbar-alt.php";
                                         <p class="box-text">In Awa Engineering; Quality Control (QC)/ Quality Assurance (QA) is an integral part of all our project implementation process.</p>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $secondParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_two_images as $image_two_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_two_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $thirdParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_three_images as $image_three_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_three_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $fourthParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_four_images as $image_four_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_four_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $fifthParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_five_images as $image_five_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_five_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $sixthParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_six_images as $image_six_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_six_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>

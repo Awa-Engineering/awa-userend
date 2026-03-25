@@ -1,18 +1,20 @@
 <?php
 include "./components/header.php";
 include "./components/navbar-alt.php";
+include_once "./auth/data-pro.php";
 ?>
 
-    <div class="breadcumb-wrapper" data-bg-src="assets/img/procurement-services.jpg">
+    <div class="breadcumb-wrapper" data-bg-src="./admin/<?php echo $breadcrumb_filePath; ?>">
         <div class="breadcumb-overlay"></div>
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="breadcumb-content">
-                        <h1 class="breadcumb-title">Procurement Services</h1>
+                        <h1 class="breadcumb-title"><?php echo $title; ?></h1>
                         <ul class="breadcumb-menu">
                             <li><a href="./">Home</a></li>
-                            <li>Procurement Services</li>
+                            <li><a href="services">Services</a></li>
+                            <li><?php echo $title; ?></li>
                         </ul>
                     </div>
                 </div>
@@ -26,13 +28,25 @@ include "./components/navbar-alt.php";
                 <div class="col-xxl-8 col-lg-7">
                     <div class="page-single mb-40">
                         <div class="page-img mb-25">
-                            <img src="./assets/img/procurement-services.jpg" alt="Service Image">
+                            <img src="./admin/<?php echo $hero_filePath; ?>" alt="Image">
                         </div>
                         <div class="page-content">
-                            <h2 class="page-title fw-semibold">Procurement Services</h2>
-                            <p class="mb-30">Efficient supply of safety equipment and materials is crucial to the smooth operations of any organization. We help our clients achieve this objective by providing these materials from the best available this objective source and with the highest quality available. Timeliness and quality are emphasized while carrying out these services because we consider our clients’ satisfaction as uppermost.</p>
+                            <h2 class="page-title fw-semibold"><?php echo $title; ?></h2>
+                            <div class="mb-30">
+                                <?php echo $firstParagraph; ?>
+                            </div>
 
-                            <h4 class="fw-semibold mb-10">Provide service</h4>
+                            <div class="row gy-40 align-items-center">
+                                <?php foreach ($media_images as $imagePath): ?>
+                                <div class="col-xl-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $imagePath; ?>" alt="Service Image">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <h4 class="fw-semibold mb-10 mt-30">Provide service</h4>
                             <div class="row gy-40">
                                 <div class="col-sm-6 col-xl-6">
                                     <div class="process-card3 py-5 text-start">
@@ -61,6 +75,76 @@ include "./components/navbar-alt.php";
                                         <p class="box-text">In Awa Engineering; Quality Control (QC)/ Quality Assurance (QA) is an integral part of all our project implementation process.</p>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $secondParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_two_images as $image_two_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_two_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $thirdParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_three_images as $image_three_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_three_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $fourthParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_four_images as $image_four_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_four_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $fifthParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_five_images as $image_five_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_five_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="mt-30">
+                                <?php echo $sixthParagraph; ?>
+                            </div>
+
+                            <div class="row gx-40 gy-40 align-items-center mt-30">
+                                <?php foreach ($media_six_images as $image_six_Path): ?>
+                                <div class="col-lg-6">
+                                    <div class="page-img">
+                                        <img src="./admin/<?php echo $image_six_Path; ?>" alt="Image" style="object-fit: cover; height: 300px; width: 100%;">
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
