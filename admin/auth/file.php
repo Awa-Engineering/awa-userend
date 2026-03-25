@@ -6,53 +6,63 @@ include "./config/db.php";
 if (isset($_POST['breadcrumb_upload_btn'])) {
 
     $serviceID = $conn->real_escape_string($_POST['serviceID']);
-    $fileName = $_FILES['filePath']['name'];
-    $fileTmp = $_FILES['filePath']['tmp_name'];
-    $fileType = $_FILES['filePath']['type'];
-    
-    $uploadDir = 'upload/';
-    $targetPath = $uploadDir . $conn->real_escape_string($fileName);
+    $fileName  = $_FILES['filePath']['name'];
+    $fileTmp   = $_FILES['filePath']['tmp_name'];
+    $fileType  = $_FILES['filePath']['type'];
 
-    // If file exists, rename to avoid overwrite
-    if (file_exists($targetPath)) {
-        $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
-        $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
+    $uploadDir = 'upload/';
+
+    // Ensure folder exists
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
     }
 
-    // Only accept image files
+    // Generate safe unique filename
+    $extension   = pathinfo($fileName, PATHINFO_EXTENSION);
+    $newFileName = uniqid('breadcrumb_', true) . '.' . $extension;
+    $targetPath  = $uploadDir . $newFileName;
+
+    // Validate image
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
         echo "<meta http-equiv='refresh' content='0; URL=edit-service?id=$serviceID'>";
         exit();
     }
 
-    // Check if entry already exists for this service in `breadcrumb` table
-    $sql = mysqli_query($conn, "SELECT * FROM breadcrumb WHERE serviceID = '$serviceID'");
-    $result = mysqli_fetch_array($sql);
+    // Check if record exists
+    $sql    = mysqli_query($conn, "SELECT filePath FROM breadcrumb WHERE serviceID = '$serviceID'");
+    $result = mysqli_fetch_assoc($sql);
 
     if ($result) {
-        // UPDATE existing breadcrumb record
+
+        // ✅ Delete old image
+        if (!empty($result['filePath']) && file_exists($result['filePath'])) {
+            unlink($result['filePath']);
+        }
+
+        // ✅ Update DB
         $update = mysqli_query($conn, "UPDATE breadcrumb SET filePath = '$targetPath' WHERE serviceID = '$serviceID'");
 
         if ($update) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Breadcrumb image updated successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to update breadcrumb image: " . mysqli_error($conn);
         }
+
     } else {
-        // INSERT new breadcrumb record
+
+        // ✅ Insert new record
         $insert = mysqli_query($conn, "INSERT INTO breadcrumb (serviceID, filePath) VALUES ('$serviceID', '$targetPath')");
 
         if ($insert) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Breadcrumb image uploaded successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to insert breadcrumb image: " . mysqli_error($conn);
         }
     }
 
-    // Redirect back
     echo "<meta http-equiv='refresh' content='0; URL=edit-service?id=$serviceID'>";
     exit();
 }
@@ -768,53 +778,64 @@ if (isset($_POST['about_sectionFour_upload_btn'])) {
 if (isset($_POST['hero_upload_btn'])) {
 
     $serviceID = $conn->real_escape_string($_POST['serviceID']);
-    $fileName = $_FILES['filePath']['name'];
-    $fileTmp = $_FILES['filePath']['tmp_name'];
-    $fileType = $_FILES['filePath']['type'];
-    
-    $uploadDir = 'upload/';
-    $targetPath = $uploadDir . $conn->real_escape_string($fileName);
+    $fileName  = $_FILES['filePath']['name'];
+    $fileTmp   = $_FILES['filePath']['tmp_name'];
+    $fileType  = $_FILES['filePath']['type'];
 
-    // If file exists, rename to avoid overwrite
-    if (file_exists($targetPath)) {
-        $uniqueName = uniqid() . '_' . rand(1000, 9999) . '_' . $fileName;
-        $targetPath = $uploadDir . $conn->real_escape_string($uniqueName);
+    $uploadDir = 'upload/';
+
+    // Ensure upload folder exists
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
     }
 
-    // Only accept image files
+    // Generate unique filename
+    $extension   = pathinfo($fileName, PATHINFO_EXTENSION);
+    $newFileName = uniqid('hero_', true) . '.' . $extension;
+    $targetPath  = $uploadDir . $newFileName;
+
+    // Validate image
     if (!preg_match("!image!", $fileType)) {
         $_SESSION['error_message'] = "Only image uploads are allowed.";
         echo "<meta http-equiv='refresh' content='0; URL=edit-service?id=$serviceID'>";
         exit();
     }
 
-    // Check if entry already exists for this service in `hero` table
-    $sql = mysqli_query($conn, "SELECT * FROM hero WHERE serviceID = '$serviceID'");
-    $result = mysqli_fetch_array($sql);
+    // Check if hero already exists
+    $sql    = mysqli_query($conn, "SELECT filePath FROM hero WHERE serviceID = '$serviceID'");
+    $result = mysqli_fetch_assoc($sql);
 
     if ($result) {
-        // UPDATE existing hero record
+
+        // ✅ Delete old image
+        if (!empty($result['filePath']) && file_exists($result['filePath'])) {
+            unlink($result['filePath']);
+        }
+
+        // ✅ Update record
         $update = mysqli_query($conn, "UPDATE hero SET filePath = '$targetPath' WHERE serviceID = '$serviceID'");
 
         if ($update) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Hero image updated successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to update hero image: " . mysqli_error($conn);
         }
+
     } else {
-        // INSERT new hero record
+
+        // ✅ Insert new record
         $insert = mysqli_query($conn, "INSERT INTO hero (serviceID, filePath) VALUES ('$serviceID', '$targetPath')");
 
         if ($insert) {
-            copy($fileTmp, $targetPath);
+            move_uploaded_file($fileTmp, $targetPath);
             $_SESSION['success_message'] = "Hero image uploaded successfully.";
         } else {
             $_SESSION['error_message'] = "Failed to insert hero image: " . mysqli_error($conn);
         }
     }
 
-    // Redirect back
+    // Redirect
     echo "<meta http-equiv='refresh' content='0; URL=edit-service?id=$serviceID'>";
     exit();
 }

@@ -1,9 +1,10 @@
 <?php
 include "./components/header.php";
 include "./components/navbar-alt.php";
+include_once "./auth/data-waste.php";
 ?>
 
-    <div class="breadcumb-wrapper" data-bg-src="assets/img/waste-management.jpg">
+    <div class="breadcumb-wrapper" data-bg-src="./admin/<?php echo $breadcrumb_filePath; ?>">
         <div class="breadcumb-overlay"></div>
         <div class="container">
             <div class="row">
@@ -26,7 +27,7 @@ include "./components/navbar-alt.php";
                 <div class="col-xxl-8 col-lg-7">
                     <div class="page-single mb-40">
                         <div class="page-img mb-25">
-                            <img src="./assets/img/waste-management.jpg" alt="Service Image">
+                            <img src="./admin/<?php echo $hero_filePath; ?>" alt="Service Image">
                         </div>
                         <div class="page-content">
                             <h2 class="page-title fw-semibold">Waste Management</h2>

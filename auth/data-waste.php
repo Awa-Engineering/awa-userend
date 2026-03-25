@@ -27,7 +27,7 @@ require_once "./config/db.php";
     FROM services
     LEFT JOIN hero ON hero.serviceID = services.serviceID
     LEFT JOIN breadcrumb ON breadcrumb.serviceID = services.serviceID
-    WHERE services.serviceID = '3' LIMIT 1";
+    WHERE services.serviceID = '2' LIMIT 1";
 
     $result = mysqli_query($conn, $select_query);
 

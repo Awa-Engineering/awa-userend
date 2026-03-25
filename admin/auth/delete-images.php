@@ -1,56 +1,96 @@
 <?php
 
 if (isset($_POST['delete_gallery_image_btn_six'])) {
-    $mediaID = $_POST['gallery_image_id'];
-    $filePath = $_POST['filePath'];
 
-    $uploadDir = __DIR__ . '/'; // adjust if needed
-    $fullPath = $uploadDir . $filePath;
+    $mediaID = intval($_POST['gallery_image_id']);
 
-    // Debug (optional)
-    // echo $fullPath;
-
-    if (file_exists($fullPath)) {
-        unlink($fullPath); // delete image from upload folder
-    }
-
-    // delete from database
-    $delete_query = "DELETE FROM media_six WHERE mediaID = ?";
-    $stmt = mysqli_prepare($conn, $delete_query);
+    // STEP 1: Get the file path from the database securely
+    $stmt = mysqli_prepare($conn, "SELECT filePath FROM media_six WHERE mediaID = ?");
     mysqli_stmt_bind_param($stmt, 'i', $mediaID);
     mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    // redirect to refresh
-    $_SESSION['success_message'] = "Image Deleted";
-    header("Location: " . $_SERVER['REQUEST_URI']);
+    if ($row) {
+        $filePath = $row['filePath']; // e.g., upload/image.jpg
+
+        // STEP 2: Build absolute path
+        $fullPath = dirname(__DIR__) . '/' . $filePath; // Adjust based on project root
+
+        // STEP 3: Delete file from folder
+        if (!empty($filePath) && file_exists($fullPath)) {
+            unlink($fullPath);
+        } else {
+            $_SESSION['error_message'] = "File not found in folder: " . $fullPath;
+        }
+
+        // STEP 4: Delete from database
+        $deleteStmt = mysqli_prepare($conn, "DELETE FROM media_six WHERE mediaID = ?");
+        mysqli_stmt_bind_param($deleteStmt, 'i', $mediaID);
+
+        if (mysqli_stmt_execute($deleteStmt)) {
+            $_SESSION['success_message'] = "Image deleted successfully.";
+        } else {
+            $_SESSION['error_message'] = "Failed to delete from database.";
+        }
+
+        mysqli_stmt_close($deleteStmt);
+
+    } else {
+        $_SESSION['error_message'] = "Image not found in database.";
+    }
+
+    // STEP 5: Redirect to refresh
+    echo "<meta http-equiv='refresh' content='0; URL=" . $_SERVER['REQUEST_URI'] . "'>";
     exit();
 }
 
 
 
 if (isset($_POST['delete_gallery_image_btn_five'])) {
-    $mediaID = $_POST['gallery_image_id'];
-    $filePath = $_POST['filePath'];
 
-    $uploadDir = __DIR__ . '/'; // adjust if needed
-    $fullPath = $uploadDir . $filePath;
+    $mediaID = intval($_POST['gallery_image_id']);
 
-    // Debug (optional)
-    // echo $fullPath;
-
-    if (file_exists($fullPath)) {
-        unlink($fullPath); // delete image from upload folder
-    }
-
-    // delete from database
-    $delete_query = "DELETE FROM media_five WHERE mediaID = ?";
-    $stmt = mysqli_prepare($conn, $delete_query);
+    // STEP 1: Get the file path from the database securely
+    $stmt = mysqli_prepare($conn, "SELECT filePath FROM media_five WHERE mediaID = ?");
     mysqli_stmt_bind_param($stmt, 'i', $mediaID);
     mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    // redirect to refresh
-    $_SESSION['success_message'] = "Image Deleted";
-    header("Location: " . $_SERVER['REQUEST_URI']);
+    if ($row) {
+        $filePath = $row['filePath']; // e.g., upload/image.jpg
+
+        // STEP 2: Build absolute path
+        $fullPath = dirname(__DIR__) . '/' . $filePath; // Adjust based on project root
+
+        // STEP 3: Delete file from folder
+        if (!empty($filePath) && file_exists($fullPath)) {
+            unlink($fullPath);
+        } else {
+            $_SESSION['error_message'] = "File not found in folder: " . $fullPath;
+        }
+
+        // STEP 4: Delete from database
+        $deleteStmt = mysqli_prepare($conn, "DELETE FROM media_five WHERE mediaID = ?");
+        mysqli_stmt_bind_param($deleteStmt, 'i', $mediaID);
+
+        if (mysqli_stmt_execute($deleteStmt)) {
+            $_SESSION['success_message'] = "Image deleted successfully.";
+        } else {
+            $_SESSION['error_message'] = "Failed to delete from database.";
+        }
+
+        mysqli_stmt_close($deleteStmt);
+
+    } else {
+        $_SESSION['error_message'] = "Image not found in database.";
+    }
+
+    // STEP 5: Redirect to refresh
+    echo "<meta http-equiv='refresh' content='0; URL=" . $_SERVER['REQUEST_URI'] . "'>";
     exit();
 }
 
@@ -58,28 +98,48 @@ if (isset($_POST['delete_gallery_image_btn_five'])) {
 
 
 if (isset($_POST['delete_gallery_image_btn_four'])) {
-    $mediaID = $_POST['gallery_image_id'];
-    $filePath = $_POST['filePath'];
 
-    $uploadDir = __DIR__ . '/'; // adjust if needed
-    $fullPath = $uploadDir . $filePath;
+    $mediaID = intval($_POST['gallery_image_id']);
 
-    // Debug (optional)
-    // echo $fullPath;
-
-    if (file_exists($fullPath)) {
-        unlink($fullPath); // delete image from upload folder
-    }
-
-    // delete from database
-    $delete_query = "DELETE FROM media_four WHERE mediaID = ?";
-    $stmt = mysqli_prepare($conn, $delete_query);
+    // STEP 1: Get the file path from the database securely
+    $stmt = mysqli_prepare($conn, "SELECT filePath FROM media_four WHERE mediaID = ?");
     mysqli_stmt_bind_param($stmt, 'i', $mediaID);
     mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    // redirect to refresh
-    $_SESSION['success_message'] = "Image Deleted";
-    header("Location: " . $_SERVER['REQUEST_URI']);
+    if ($row) {
+        $filePath = $row['filePath']; // e.g., upload/image.jpg
+
+        // STEP 2: Build absolute path
+        $fullPath = dirname(__DIR__) . '/' . $filePath; // Adjust based on project root
+
+        // STEP 3: Delete file from folder
+        if (!empty($filePath) && file_exists($fullPath)) {
+            unlink($fullPath);
+        } else {
+            $_SESSION['error_message'] = "File not found in folder: " . $fullPath;
+        }
+
+        // STEP 4: Delete from database
+        $deleteStmt = mysqli_prepare($conn, "DELETE FROM media_four WHERE mediaID = ?");
+        mysqli_stmt_bind_param($deleteStmt, 'i', $mediaID);
+
+        if (mysqli_stmt_execute($deleteStmt)) {
+            $_SESSION['success_message'] = "Image deleted successfully.";
+        } else {
+            $_SESSION['error_message'] = "Failed to delete from database.";
+        }
+
+        mysqli_stmt_close($deleteStmt);
+
+    } else {
+        $_SESSION['error_message'] = "Image not found in database.";
+    }
+
+    // STEP 5: Redirect to refresh
+    echo "<meta http-equiv='refresh' content='0; URL=" . $_SERVER['REQUEST_URI'] . "'>";
     exit();
 }
 
@@ -87,84 +147,145 @@ if (isset($_POST['delete_gallery_image_btn_four'])) {
 
 
 if (isset($_POST['delete_gallery_image_btn_three'])) {
-    $mediaID = $_POST['gallery_image_id'];
-    $filePath = $_POST['filePath'];
 
-    $uploadDir = __DIR__ . '/'; // adjust if needed
-    $fullPath = $uploadDir . $filePath;
+    $mediaID = intval($_POST['gallery_image_id']);
 
-    // Debug (optional)
-    // echo $fullPath;
-
-    if (file_exists($fullPath)) {
-        unlink($fullPath); // delete image from upload folder
-    }
-
-    // delete from database
-    $delete_query = "DELETE FROM media_three WHERE mediaID = ?";
-    $stmt = mysqli_prepare($conn, $delete_query);
+    // STEP 1: Get the file path from the database securely
+    $stmt = mysqli_prepare($conn, "SELECT filePath FROM media_three WHERE mediaID = ?");
     mysqli_stmt_bind_param($stmt, 'i', $mediaID);
     mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    // redirect to refresh
-    $_SESSION['success_message'] = "Image Deleted";
-    header("Location: " . $_SERVER['REQUEST_URI']);
+    if ($row) {
+        $filePath = $row['filePath']; // e.g., upload/image.jpg
+
+        // STEP 2: Build absolute path
+        $fullPath = dirname(__DIR__) . '/' . $filePath; // Adjust based on project root
+
+        // STEP 3: Delete file from folder
+        if (!empty($filePath) && file_exists($fullPath)) {
+            unlink($fullPath);
+        } else {
+            $_SESSION['error_message'] = "File not found in folder: " . $fullPath;
+        }
+
+        // STEP 4: Delete from database
+        $deleteStmt = mysqli_prepare($conn, "DELETE FROM media_three WHERE mediaID = ?");
+        mysqli_stmt_bind_param($deleteStmt, 'i', $mediaID);
+
+        if (mysqli_stmt_execute($deleteStmt)) {
+            $_SESSION['success_message'] = "Image deleted successfully.";
+        } else {
+            $_SESSION['error_message'] = "Failed to delete from database.";
+        }
+
+        mysqli_stmt_close($deleteStmt);
+
+    } else {
+        $_SESSION['error_message'] = "Image not found in database.";
+    }
+
+    // STEP 5: Redirect to refresh
+    echo "<meta http-equiv='refresh' content='0; URL=" . $_SERVER['REQUEST_URI'] . "'>";
     exit();
 }
 
 
 
 if (isset($_POST['delete_gallery_image_btn_two'])) {
-    $mediaID = $_POST['gallery_image_id'];
-    $filePath = $_POST['filePath'];
 
-    $uploadDir = __DIR__ . '/'; // adjust if needed
-    $fullPath = $uploadDir . $filePath;
+    $mediaID = intval($_POST['gallery_image_id']);
 
-    // Debug (optional)
-    // echo $fullPath;
-
-    if (file_exists($fullPath)) {
-        unlink($fullPath); // delete image from upload folder
-    }
-
-    // delete from database
-    $delete_query = "DELETE FROM media_two WHERE mediaID = ?";
-    $stmt = mysqli_prepare($conn, $delete_query);
+    // STEP 1: Get the file path from the database securely
+    $stmt = mysqli_prepare($conn, "SELECT filePath FROM media_two WHERE mediaID = ?");
     mysqli_stmt_bind_param($stmt, 'i', $mediaID);
     mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    // redirect to refresh
-    $_SESSION['success_message'] = "Image Deleted";
-    header("Location: " . $_SERVER['REQUEST_URI']);
+    if ($row) {
+        $filePath = $row['filePath']; // e.g., upload/image.jpg
+
+        // STEP 2: Build absolute path
+        $fullPath = dirname(__DIR__) . '/' . $filePath; // Adjust based on project root
+
+        // STEP 3: Delete file from folder
+        if (!empty($filePath) && file_exists($fullPath)) {
+            unlink($fullPath);
+        } else {
+            $_SESSION['error_message'] = "File not found in folder: " . $fullPath;
+        }
+
+        // STEP 4: Delete from database
+        $deleteStmt = mysqli_prepare($conn, "DELETE FROM media_two WHERE mediaID = ?");
+        mysqli_stmt_bind_param($deleteStmt, 'i', $mediaID);
+
+        if (mysqli_stmt_execute($deleteStmt)) {
+            $_SESSION['success_message'] = "Image deleted successfully.";
+        } else {
+            $_SESSION['error_message'] = "Failed to delete from database.";
+        }
+
+        mysqli_stmt_close($deleteStmt);
+
+    } else {
+        $_SESSION['error_message'] = "Image not found in database.";
+    }
+
+    // STEP 5: Redirect to refresh
+    echo "<meta http-equiv='refresh' content='0; URL=" . $_SERVER['REQUEST_URI'] . "'>";
     exit();
 }
 
 
 
 if (isset($_POST['delete_gallery_image_btn_one'])) {
-    $mediaID = $_POST['gallery_image_id'];
-    $filePath = $_POST['filePath'];
 
-    $uploadDir = __DIR__ . '/'; // adjust if needed
-    $fullPath = $uploadDir . $filePath;
+    $mediaID = intval($_POST['gallery_image_id']);
 
-    // Debug (optional)
-    // echo $fullPath;
-
-    if (file_exists($fullPath)) {
-        unlink($fullPath); // delete image from upload folder
-    }
-
-    // delete from database
-    $delete_query = "DELETE FROM media WHERE mediaID = ?";
-    $stmt = mysqli_prepare($conn, $delete_query);
+    // STEP 1: Get file path from DB (SECURE)
+    $stmt = mysqli_prepare($conn, "SELECT filePath FROM media WHERE mediaID = ?");
     mysqli_stmt_bind_param($stmt, 'i', $mediaID);
     mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
+    mysqli_stmt_close($stmt);
 
-    // redirect to refresh
-    $_SESSION['success_message'] = "Image Deleted";
-    header("Location: " . $_SERVER['REQUEST_URI']);
+    if ($row) {
+
+        $filePath = $row['filePath']; // e.g. upload/image.jpg
+
+        // Correct path (project root)
+        $fullPath = dirname(__DIR__) . '/' . $filePath;
+
+        // STEP 2: Delete file from folder
+        if (!empty($filePath) && file_exists($fullPath)) {
+            unlink($fullPath);
+        } else {
+            $_SESSION['error_message'] = "File not found: " . $fullPath;
+        }
+
+        // STEP 3: Delete from database
+        $deleteStmt = mysqli_prepare($conn, "DELETE FROM media WHERE mediaID = ?");
+        mysqli_stmt_bind_param($deleteStmt, 'i', $mediaID);
+
+        if (mysqli_stmt_execute($deleteStmt)) {
+            $_SESSION['success_message'] = "Image deleted successfully.";
+        } else {
+            $_SESSION['error_message'] = "Failed to delete from database.";
+        }
+
+        mysqli_stmt_close($deleteStmt);
+
+    } else {
+        $_SESSION['error_message'] = "Image not found in DB.";
+    }
+
+    // STEP 4: Redirect
+    echo "<meta http-equiv='refresh' content='0; URL=" . $_SERVER['REQUEST_URI'] . "'>";
     exit();
 }
 
@@ -185,7 +306,7 @@ if (isset($_POST['delete_project_gallery_image_btn'])) {
 
         $filePath = $row['filePath']; // upload/image.jpg
 
-        // ✅ Correct dynamic path
+        // Correct dynamic path
         $fullPath = dirname(__DIR__) . '/' . $filePath;
 
         if (!empty($filePath) && file_exists($fullPath)) {
