@@ -23,138 +23,81 @@ include "./components/navbar-alt.php";
     <section class="space-top space-extra2-bottom mb-40">
         <div class="container">
             <div class="row gy-4">
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card6">
-                        <div class="property-card-thumb img-shine">
-                            <img src="assets/img/environmental-engineering.jpg" alt="img">
-                        </div>
-                        <div class="property-card-details">
-                            <h4 class="property-card-title">
-                                <a href="environmental-engineering">Environmental Engineering</a>
-                            </h4>
-                            <p class="property-card-text">We apply engineering excellence based on the leading edge technology & management in all cases hence we are well positioned to...</p>
-                            <div class="property-btn-wrap">
-                                <div class="btn-wrap">
-                                    <a href="environmental-engineering" class="th-btn style-border8 th-btn-icon">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card6">
-                        <div class="property-card-thumb img-shine">
-                            <img src="assets/img/waste-management.jpg" alt="img">
-                        </div>
-                        <div class="property-card-details">
-                            <h4 class="property-card-title">
-                                <a href="waste-management">Waste Management</a>
-                            </h4>
-                            <p class="property-card-text">Waste is frequently produced from human and industrial activities & their impact on the environment cannot be over emphasized...</p>
-                            <div class="property-btn-wrap">
-                                <div class="btn-wrap">
-                                    <a href="waste-management" class="th-btn style-border8 th-btn-icon">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    require_once "./config/db.php";
 
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card6">
-                        <div class="property-card-thumb img-shine">
-                            <img src="assets/img/environmental-studies.jpg" alt="img">
-                        </div>
-                        <div class="property-card-details">
-                            <h4 class="property-card-title">
-                                <a href="environmental-studies">Environmental Studies</a>
-                            </h4>
-                            <p class="property-card-text">Driven by our interest in preserving the environment, we provide as part of our core services, Environmental Impact Assessment...</p>
-                            <div class="property-btn-wrap">
-                                <div class="btn-wrap">
-                                    <a href="environmental-studies" class="th-btn style-border8 th-btn-icon">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    $serviceLinks = [
+                        1 => "environmental-engineering",
+                        2 => "waste-management",
+                        3 => "environmental-studies",
+                        4 => "fumigation-pest-odor-control",
+                        5 => "procurement-services",
+                        6 => "corrosion-control"
+                    ];
 
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card6">
-                        <div class="property-card-thumb img-shine">
-                            <img src="assets/img/fumigation-pest-odor-control.jpg" alt="img">
-                        </div>
-                        <div class="property-card-details">
-                            <h4 class="property-card-title">
-                                <a href="fumigation-pest-odor-control">Fumigation & Pest-Odor Control</a>
-                            </h4>
-                            <p class="property-card-text">At AWA, we employ the best professional and safe methods in ensuring Fumigation safety. We currently take care of Pest Control...</p>
-                            <div class="property-btn-wrap">
-                                <div class="btn-wrap">
-                                    <a href="fumigation-pest-odor-control" class="th-btn style-border8 th-btn-icon">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    $select_query = "SELECT 
+                        services.serviceID,
+                        services.title,
+                        services.firstParagraph,
+                        hero.filePath AS hero_filePath
+                    FROM services
+                    LEFT JOIN hero ON hero.serviceID = services.serviceID";
 
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card6">
-                        <div class="property-card-thumb img-shine">
-                            <img src="assets/img/procurement-services.jpg" alt="img">
-                        </div>
-                        <div class="property-card-details">
-                            <h4 class="property-card-title">
-                                <a href="procurement-services">Procurement services</a>
-                            </h4>
-                            <p class="property-card-text">Efficient supply of safety equipment and materials is crucial to the smooth operations of any organization. We help our client...</p>
-                            <div class="property-btn-wrap">
-                                <div class="btn-wrap">
-                                    <a href="procurement-services" class="th-btn style-border8 th-btn-icon">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    $result = mysqli_query($conn, $select_query);
 
-                <div class="col-md-6 col-xl-4">
-                    <div class="property-card6">
-                        <div class="property-card-thumb img-shine">
-                            <img src="assets/img/corrosion-control.jpg" alt="img">
-                        </div>
-                        <div class="property-card-details">
-                            <h4 class="property-card-title">
-                                <a href="corrosion-control">Corrosion Control</a>
-                            </h4>
-                            <p>Corrosion can be defined as the degradation of a material due to reaction with its environment. It is a spontaneous process. The driving force of corros...</p>
-                            <div class="property-btn-wrap">
-                                <div class="btn-wrap">
-                                    <a href="corrosion-control" class="th-btn style-border8 th-btn-icon">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    if (!$result) {
+                        die("Query failed: " . mysqli_error($conn));
+                    }
 
-                <!-- <div class="col-md-6 col-xl-4">
-                    <div class="property-card6">
-                        <div class="property-card-thumb img-shine">
-                            <img src="assets/img/environmental-engineering.jpg" alt="img">
-                        </div>
-                        <div class="property-card-details">
-                            <h4 class="property-card-title">
-                                <a href="environmental-engineering">Environmental Engineering</a>
-                            </h4>
-                            <p class="property-card-text">We apply engineering excellence based on the leading edge technology & management in all cases hence we are well positioned to...</p>
-                            <div class="property-btn-wrap">
-                                <div class="btn-wrap">
-                                    <a href="environmental-engineering" class="th-btn style-border8 th-btn-icon">View Details</a>
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+
+                            $serviceID = $row['serviceID'];
+                            $link = isset($serviceLinks[$serviceID]) 
+                                ? $serviceLinks[$serviceID] 
+                                : "#"; // fallback
+                    ?>
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
+                            <div class="property-card6">
+                                <div class="property-card-thumb img-shine">
+                                    <img 
+                                        src="./admin/<?php echo $row['hero_filePath']; ?>" 
+                                        alt="<?php echo htmlspecialchars($row['title']); ?>"
+                                    >
+                                </div>
+                                <div class="property-card-details">
+                                    <h4 class="property-card-title">
+                                        <a href="<?php echo $link; ?>">
+                                            <?php echo $row['title']; ?>
+                                        </a>
+                                    </h4>
+                                    <p class="property-card-text">
+                                        <?php 
+                                            echo strlen($row['firstParagraph']) > 115 
+                                            ? substr($row['firstParagraph'], 0, 115) . '...' 
+                                            : $row['firstParagraph']; 
+                                        ?>
+                                    </p>
+                                    <div class="property-btn-wrap">
+                                        <div class="btn-wrap">
+                                            <a href="<?php echo $link; ?>" class="th-btn style-border8 th-btn-icon">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div> -->
+                    <?php
+                        }
+                    } else {
+                        echo "
+                        <div class='text-center mt-4'>
+                            <img src='./assets/img/empty.png' width='220'>
+                            <p class='lead mt-3'>No Services Yet!</p>
+                        </div>";
+                    }
+                ?>
                 
             </div>
         </div>
