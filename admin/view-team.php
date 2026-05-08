@@ -32,7 +32,7 @@
                     <div class="mb-6 mb-xl-10">
                         <div class="row g-3 align-items-center">
                             <div class="col">
-                                <h3 class="ls-tight"><?php echo $title; ?></h3>
+                                <h3 class="ls-tight"><?php echo $fullName; ?></h3>
                             </div>
                             <div class="col">
                                 <div class="hstack gap-2 justify-content-end">
